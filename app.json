@@ -1,0 +1,12 @@
+{
+  "name": "dont-think-just-drink",
+  "displayName": "dont-think-just-drink",
+  "expo": {
+    "name": "dont-think-just-drink",
+    "slug": "dont-think-just-drink",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
