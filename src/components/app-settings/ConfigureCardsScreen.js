@@ -7,8 +7,6 @@ const ConfigureCardsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Button title="<" onPress={() => navigation.goBack()} />
-      <Button title="Home" onPress={() => changeScreen('Home')} />
       <Text>Create your custom cards</Text>
       <TextInput
         style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
