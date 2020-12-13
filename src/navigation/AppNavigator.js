@@ -15,7 +15,7 @@ const SettingsStack = createStackNavigator();
 const GamesNavigationStack = () => (
   <GameStack.Navigator initialRouteName="Home" options={{ title: "Don't Think, Just Drink" }}>
     <GameStack.Screen name="Home" component={HomeScreen} />
-    <GameStack.Screen name="Game" component={CardScreen} />
+    <GameStack.Screen name="Card" component={CardScreen} />
   </GameStack.Navigator>
 );
 

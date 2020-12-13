@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
         <HeaderText>Just Drink</HeaderText>
       </View>
       <View style={styles.section}>
-        <AppButton title="Start Drinking" onPress={() => navigation.navigate('Game')} style={styles.button} />
+        <AppButton title="Start Drinking" onPress={() => navigation.navigate('Card')} style={styles.button} />
       </View>
     </SafeAreaView>
   );
