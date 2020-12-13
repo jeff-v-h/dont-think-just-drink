@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { styles } from '../../styles/styles';
+import AppText from '../common/AppText';
 
 function RulesScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Rules</Text>
-      <Text>It's self explanatory</Text>
-      <Text>Read the words, drink your drink.</Text>
-      <Text>Also, take a sip for needing to refer to these rules.</Text>
+    <View style={[styles.container, styles.rulesScreen]}>
+      <AppText style={styles.rulesText}>It's self explanatory</AppText>
+      <AppText style={styles.rulesText}>Read the words, drink your drink.</AppText>
+      <AppText style={styles.rulesText}>Also, take a sip for needing to refer to these rules.</AppText>
     </View>
   );
 }

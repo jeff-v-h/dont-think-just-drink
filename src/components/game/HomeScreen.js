@@ -6,7 +6,7 @@ import AppButton from '../common/AppButton';
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <SafeAreaView style={[styles.container, styles.homeScreen]}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.menuRow}>
         <AppButton title="Menu" onPress={() => navigation.toggleDrawer()} />
       </View>

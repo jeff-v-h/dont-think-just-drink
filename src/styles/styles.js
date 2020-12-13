@@ -13,12 +13,13 @@ export const styles = StyleSheet.create({
     padding: moderateScale(10)
   },
   text: {
-    fontSize: moderateScale(24)
+    fontSize: moderateScale(24),
+    textAlign: 'center'
   },
   headerText: {
-    fontSize: moderateScale(30)
+    fontSize: moderateScale(30),
+    textAlign: 'center'
   },
-  homeScreen: {},
   section: {
     flex: 1,
     justifyContent: 'center',
@@ -40,5 +41,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: moderateScale(20),
     color: 'white'
+  },
+  rulesScreen: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: '40%'
+  },
+  rulesText: {
+    marginBottom: moderateScale(20)
   }
 });

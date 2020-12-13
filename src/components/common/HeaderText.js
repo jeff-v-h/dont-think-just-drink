@@ -7,7 +7,7 @@ export default class HeaderText extends React.Component {
   render() {
     return (
       <AppText>
-        <Text style={styles.headerText}>{this.props.children}</Text>
+        <Text style={[styles.headerText, this.props.style]}>{this.props.children}</Text>
       </AppText>
     );
   }
