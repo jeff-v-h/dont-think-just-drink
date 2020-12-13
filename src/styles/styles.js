@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { moderateScale } from '../utils/scaling';
 
+export const colours = {
+  coral: '#FF7F50'
+};
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -27,6 +31,14 @@ export const styles = StyleSheet.create({
     width: '100%'
   },
   button: {
-    width: '100%'
+    backgroundColor: colours.coral,
+    padding: moderateScale(6),
+    borderRadius: 2
+  },
+  buttonText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: moderateScale(20),
+    color: 'white'
   }
 });
