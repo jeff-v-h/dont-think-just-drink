@@ -2,8 +2,8 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import HomeScreen from '../components/home/HomeScreen';
-import RulesScreen from '../components/home/RulesScreen';
+import HomeScreen from '../components/game/HomeScreen';
+import RulesScreen from '../components/rules/RulesScreen';
 import CardScreen from '../components/game/CardScreen';
 import ConfigureCardsScreen from '../components/app-settings/ConfigureCardsScreen';
 
@@ -34,7 +34,7 @@ const SettingsNavigationStack = () => (
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerPosition="right">
+      <Drawer.Navigator drawerPosition="right" drawerType="slide">
         <Drawer.Screen name="Game" component={GamesNavigationStack} />
         <Drawer.Screen name="Rules" component={RulesNavigationStack} />
         <Drawer.Screen name="Configuration" component={SettingsNavigationStack} />
