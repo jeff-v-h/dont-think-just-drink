@@ -34,7 +34,7 @@ const SettingsNavigationStack = () => (
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
+      <Drawer.Navigator drawerPosition="right">
         <Drawer.Screen name="Game" component={GamesNavigationStack} />
         <Drawer.Screen name="Rules" component={RulesNavigationStack} />
         <Drawer.Screen name="Configuration" component={SettingsNavigationStack} />

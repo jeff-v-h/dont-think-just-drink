@@ -1,10 +1,32 @@
 import { StyleSheet } from 'react-native';
+import { moderateScale } from '../utils/scaling';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: moderateScale(10)
+  },
+  text: {
+    fontSize: moderateScale(24)
+  },
+  headerText: {
+    fontSize: moderateScale(30)
+  },
+  homeScreen: {},
+  section: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
+  menuRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%'
+  },
+  button: {
+    width: '100%'
   }
 });
