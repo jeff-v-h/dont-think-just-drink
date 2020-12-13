@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Button, Text, TextInput } from 'react-native';
-import { styles } from '../../styles/styles';
+import { View, Text, TextInput } from 'react-native';
+import styles from '../../styles/styles';
 
 const ConfigureCardsScreen = ({ navigation }) => {
   const [value, onChangeText] = React.useState('If ____, drink ___ sips');

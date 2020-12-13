@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, SafeAreaView } from 'react-native';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 import HeaderText from '../common/HeaderText';
 import AppButton from '../common/AppButton';
 

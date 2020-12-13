@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableHighlight, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 AppButton.propTypes = {
   title: PropTypes.string.isRequired,

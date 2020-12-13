@@ -2,10 +2,11 @@ import { StyleSheet } from 'react-native';
 import { moderateScale } from '../utils/scaling';
 
 export const colours = {
-  coral: '#FF7F50'
+  coral: '#FF7F50',
+  white: '#fff'
 };
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -40,14 +41,8 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: moderateScale(20),
-    color: 'white'
-  },
-  rulesScreen: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: '40%'
-  },
-  rulesText: {
-    marginBottom: moderateScale(20)
+    color: colours.white
   }
 });
+
+export default styles;
