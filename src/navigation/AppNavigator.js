@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../components/game/HomeScreen';
 import RulesScreen from '../components/rules/RulesScreen';
-import CardScreen from '../components/game/CardScreen';
+import GameScreen from '../components/game/GameScreen';
 import ConfigureCardsScreen from '../components/app-settings/ConfigureCardsScreen';
 
 const Drawer = createDrawerNavigator();
@@ -15,7 +15,7 @@ const SettingsStack = createStackNavigator();
 const GamesNavigationStack = () => (
   <GameStack.Navigator initialRouteName="Home" options={{ title: "Don't Think, Just Drink" }}>
     <GameStack.Screen name="Home" component={HomeScreen} />
-    <GameStack.Screen name="Card" component={CardScreen} />
+    <GameStack.Screen name="Game" component={GameScreen} />
   </GameStack.Navigator>
 );
 
