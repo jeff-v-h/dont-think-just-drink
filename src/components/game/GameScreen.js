@@ -8,11 +8,12 @@ import { cardContentList } from '../../utils/card-content';
 class GameScreen extends React.Component {
   state = {
     played: [],
-    deck: cardContentList
+    deck: [...cardContentList],
+    cardIndexToShow: -1
   };
 
   componentDidMount() {
-    this.playCard();
+    this.playNewCard();
   }
 
   // min and max included as possible outcomes
@@ -24,25 +25,52 @@ class GameScreen extends React.Component {
     return deck[randomNum];
   };
 
-  playCard = () => {
-    const { played, deck } = this.state;
+  playNextCard = () => {
+    const { played, cardIndexToShow } = this.state;
+    // If it is currently on the most recently played card, then play new card, otherwise go to next index
+    if (cardIndexToShow == played.length - 1) {
+      this.playNewCard();
+      return;
+    }
+
+    this.setState({ cardIndexToShow: cardIndexToShow + 1 });
+  };
+
+  playNewCard = () => {
+    const { played, deck, cardIndexToShow } = this.state;
     const randomIndex = this.randomIntFromInterval(0, deck.length - 1);
     played.push(deck[randomIndex]);
     deck.splice(randomIndex, 1);
-    this.setState({ played, deck });
+    this.setState({ played, deck, cardIndexToShow: cardIndexToShow + 1 });
   };
+
+  seePreviousCard = () =>
+    this.setState((prevState) => ({
+      cardIndexToShow: prevState.cardIndexToShow - 1
+    }));
+
+  seeCurrentCard = () =>
+    this.setState((prevState) => ({
+      cardIndexToShow: prevState.played.length - 1
+    }));
 
   render() {
     const { navigation } = this.props;
-    const { played } = this.state;
+    const { played, cardIndexToShow, deck } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.section}>
-          <AppText>{played[played.length - 1]}</AppText>
+          <AppText>{played[cardIndexToShow]}</AppText>
         </View>
         <View style={styles.section}>
-          <AppButton title="Next" onPress={() => this.playCard()} style={styles.button} />
+          {deck.length > 0 && <AppButton title="Next" onPress={() => this.playNextCard()} style={styles.button} />}
+          {cardIndexToShow < played.length - 1 && (
+            <AppButton title="Back to most recent" onPress={() => this.seeCurrentCard()} style={styles.button} />
+          )}
+          {cardIndexToShow > 0 && (
+            <AppButton title="Previous" onPress={() => this.seePreviousCard()} style={styles.button} />
+          )}
         </View>
       </SafeAreaView>
     );
