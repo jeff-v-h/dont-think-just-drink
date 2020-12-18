@@ -3,18 +3,31 @@ import { View, SafeAreaView } from 'react-native';
 import styles from '../../styles/styles';
 import AppText from '../common/AppText';
 import AppButton from '../common/AppButton';
-import { cardContentList } from '../../utils/card-content';
+import { cardContentList, asianCardContentList } from '../../utils/card-content';
+import { GameTypesEnum } from '../../utils/enums';
 
 class GameScreen extends React.Component {
-  state = {
-    played: [],
-    deck: [...cardContentList],
-    cardIndexToShow: -1
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      played: [],
+      deck: this.getDeckType(this.props.route.params.gameType),
+      cardIndexToShow: -1
+    };
+  }
 
   componentDidMount() {
     this.playNewCard();
   }
+
+  getDeckType = (gameType) => {
+    switch (gameType) {
+      case GameTypesEnum.asian:
+        return [...asianCardContentList];
+      default:
+        return [...cardContentList];
+    }
+  };
 
   // min and max included as possible outcomes
   randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);

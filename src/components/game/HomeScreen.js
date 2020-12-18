@@ -3,6 +3,7 @@ import { View, SafeAreaView } from 'react-native';
 import styles from '../../styles/styles';
 import HeaderText from '../common/HeaderText';
 import AppButton from '../common/AppButton';
+import { GameTypesEnum } from '../../utils/enums';
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -15,7 +16,24 @@ const HomeScreen = ({ navigation }) => {
         <HeaderText>Just Drink</HeaderText>
       </View>
       <View style={styles.section}>
-        <AppButton title="Start Drinking" onPress={() => navigation.navigate('Game')} style={styles.button} />
+        <AppButton
+          title="Start Drinking"
+          onPress={() =>
+            navigation.navigate('Game', {
+              gameType: GameTypesEnum.normal
+            })
+          }
+          style={styles.button}
+        />
+        <AppButton
+          title="Start Asian Version"
+          onPress={() =>
+            navigation.navigate('Game', {
+              gameType: GameTypesEnum.asian
+            })
+          }
+          style={styles.button}
+        />
       </View>
     </SafeAreaView>
   );
