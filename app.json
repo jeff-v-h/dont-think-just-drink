@@ -4,9 +4,17 @@
   "expo": {
     "name": "dont-think-just-drink",
     "slug": "dont-think-just-drink",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.valentineapps.dontthinkjustdrink",
+      "buildNumber": "0.1.0"
+    },
+    "android": {
+      "package": "com.valentineapps.dontthinkjustdrink",
+      "versionCode": 0
+    }
   }
 }
