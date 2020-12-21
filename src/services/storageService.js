@@ -13,16 +13,6 @@ const storeData = async (storageKey, value) => {
 const getData = async (storageKey) => {
   try {
     const jsonValue = await AsyncStorage.getItem(storageKey);
-    const test = JSON.parse('hello');
-    console.log(test);
-    console.log(typeof test);
-    const test2 = JSON.parse(
-      JSON.stringify({
-        hey: 'sup'
-      })
-    );
-    console.log(test2);
-    console.log(typeof test2);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to get data from phone storage.');
