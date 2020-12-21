@@ -6,6 +6,8 @@ import AppText from '../common/AppText';
 import AppButton from '../common/AppButton';
 import { cardContentList, asianCardContentList } from '../../utils/card-content';
 import { GameTypesEnum } from '../../utils/enums';
+import StorageService from '../../services/storageService';
+import uuid from 'uuid';
 
 class GameScreen extends React.Component {
   constructor(props) {
@@ -13,7 +15,8 @@ class GameScreen extends React.Component {
     this.state = {
       played: [],
       deck: this.getDeckType(this.props.route.params.gameType),
-      cardIndexToShow: -1
+      cardIndexToShow: -1,
+      gameId: uuid.v1()
     };
   }
 
@@ -55,8 +58,17 @@ class GameScreen extends React.Component {
     const randomIndex = this.randomIntFromInterval(0, deck.length - 1);
     played.push(deck[randomIndex]);
     deck.splice(randomIndex, 1);
-    this.setState({ played, deck, cardIndexToShow: cardIndexToShow + 1 });
+    this.setState(
+      {
+        played,
+        deck,
+        cardIndexToShow: cardIndexToShow + 1
+      },
+      () => this.saveAsMostRecent()
+    );
   };
+
+  saveAsMostRecent = () => StorageService.storeData('most-recent', this.state);
 
   seePreviousCard = () =>
     this.setState((prevState) => ({
