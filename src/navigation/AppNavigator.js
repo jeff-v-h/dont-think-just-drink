@@ -5,12 +5,12 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../components/game/HomeScreen';
 import RulesScreen from '../components/rules/RulesScreen';
 import GameScreen from '../components/game/GameScreen';
-import ConfigureCardsScreen from '../components/app-settings/ConfigureCardsScreen';
+import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 
 const Drawer = createDrawerNavigator();
 const GameStack = createStackNavigator();
 const RulesStack = createStackNavigator();
-const SettingsStack = createStackNavigator();
+const DecksStack = createStackNavigator();
 
 const GamesNavigationStack = () => (
   <GameStack.Navigator initialRouteName="Home" options={{ title: "Don't Think, Just Drink" }}>
@@ -25,10 +25,10 @@ const RulesNavigationStack = () => (
   </RulesStack.Navigator>
 );
 
-const SettingsNavigationStack = () => (
-  <SettingsStack.Navigator initialRouteName="Configure">
-    <SettingsStack.Screen name="Configure" component={ConfigureCardsScreen} options={{ title: 'Configuration' }} />
-  </SettingsStack.Navigator>
+const DecksNavigationStack = () => (
+  <DecksStack.Navigator initialRouteName="Configure">
+    <DecksStack.Screen name="Configure" component={ConfigureCardsScreen} options={{ title: 'Configuration' }} />
+  </DecksStack.Navigator>
 );
 
 function AppNavigator() {
@@ -37,7 +37,7 @@ function AppNavigator() {
       <Drawer.Navigator drawerPosition="right" drawerType="slide">
         <Drawer.Screen name="Game" component={GamesNavigationStack} />
         <Drawer.Screen name="Rules" component={RulesNavigationStack} />
-        <Drawer.Screen name="Configuration" component={SettingsNavigationStack} />
+        <Drawer.Screen name="Decks" component={DecksNavigationStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
