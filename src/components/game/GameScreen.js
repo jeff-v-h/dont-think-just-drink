@@ -4,7 +4,8 @@ import styles from '../../styles/styles';
 import gameStyles from '../../styles/gameStyles';
 import AppText from '../common/AppText';
 import AppButton from '../common/AppButton';
-import { cardContentList, asianCardContentList } from '../../utils/card-content';
+import standardDeck from '../../utils/decks/standard-deck';
+import asianDeck from '../../utils/decks/asian-deck';
 import { GameTypesEnum } from '../../utils/enums';
 import StorageService from '../../services/storageService';
 import uuid from 'uuid';
@@ -27,9 +28,9 @@ class GameScreen extends React.Component {
   getDeckType = (gameType) => {
     switch (gameType) {
       case GameTypesEnum.asian:
-        return [...asianCardContentList];
+        return [...asianDeck];
       default:
-        return [...cardContentList];
+        return [...standardDeck];
     }
   };
 
