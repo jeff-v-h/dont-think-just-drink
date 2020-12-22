@@ -111,7 +111,7 @@ export const asianCardContentList = [
 
 const asianDeck = {
   name: 'Asian',
-  cards: cardContentList,
+  cards: asianCardContentList,
   type: GameTypesEnum.asian
 };
 

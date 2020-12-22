@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../components/game/HomeScreen';
 import RulesScreen from '../components/rules/RulesScreen';
 import GameScreen from '../components/game/GameScreen';
+import DeckListScreen from '../components/decks/DeckListScreen';
 import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 
 const Drawer = createDrawerNavigator();
@@ -26,8 +27,9 @@ const RulesNavigationStack = () => (
 );
 
 const DecksNavigationStack = () => (
-  <DecksStack.Navigator initialRouteName="Configure">
-    <DecksStack.Screen name="Configure" component={ConfigureCardsScreen} options={{ title: 'Configuration' }} />
+  <DecksStack.Navigator initialRouteName="DeckList">
+    <DecksStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
+    <DecksStack.Screen name="ConfigureCards" component={ConfigureCardsScreen} options={{ title: 'Configuration' }} />
   </DecksStack.Navigator>
 );
 

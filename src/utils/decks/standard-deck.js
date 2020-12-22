@@ -1,3 +1,5 @@
+import { GameTypesEnum } from '../enums';
+
 export const cardContentList = [
   'If you can speak another language, take 2 sips',
   'Take 2 sips if you are in either the medical, law or engineering field',

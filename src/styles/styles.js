@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { moderateScale } from '../utils/scaling';
+import { moderateScale, scale } from '../utils/scaling';
 
 export const colours = {
   coral: '#FF7F50',
@@ -42,6 +42,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: moderateScale(20),
     color: colours.white
+  },
+  touchable: {
+    width: '100%',
+    paddingTop: scale(5),
+    paddingBottom: scale(5),
+    paddingLeft: '3%',
+    paddingRight: '3%',
+    borderBottomWidth: 1
+  },
+  touchableView: {
+    height: '100%',
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center'
+  },
+  itemText: {
+    fontSize: moderateScale(14)
   }
 });
 
