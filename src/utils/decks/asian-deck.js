@@ -1,4 +1,5 @@
 import { GameTypesEnum } from '../enums';
+import uuid from 'uuid';
 
 export const asianCardContentList = [
   'If your parents had/currently have a small business, take 3 sips',
@@ -13,7 +14,7 @@ export const asianCardContentList = [
   'If you can speak Mandarin chinese, drinks 2 sips',
   'If you can speak any dialect of chinese apart from Mandarin, take 2 sips',
   "If you've ever calculated the lowest grade you need to get to keep an A, take 7 sips.",
-  'If you were pre-med at one point, take 4 sips/=.',
+  'If you were pre-med at one point, take 4 sips.',
   "If you've never failed a test, take 2 sips.",
   "Most likely: On 3, every point at the person who is most 'Asian', winner gives 5 sips.If you have a rice cooker that plays a tune when it's finished, take 2 sips",
   "If you're friend who suggested this game, take 10 sips & give 10 sips.",
@@ -110,6 +111,7 @@ export const asianCardContentList = [
 ];
 
 const asianDeck = {
+  id: uuid.v1(),
   name: 'Asian',
   cards: asianCardContentList,
   type: GameTypesEnum.asian

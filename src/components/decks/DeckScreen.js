@@ -6,13 +6,12 @@ import ListLinkRow from '../common/ListLinkRow';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
 
-class DeckListScreen extends React.Component {
+class DeckScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      decks: [standardDeck, asianDeck],
-      currentDeck: standardDeck.name
+      deck: props.route.params.deckId === asianDeck.id ? asianDeck : standardDeck
     };
   }
 
@@ -20,24 +19,25 @@ class DeckListScreen extends React.Component {
   //   this.loadCustomDecks();
   // }
 
-  navigateToDeck = (deck) => () => {
-    this.props.navigation.navigate('Deck', {
-      deckId: deck.id
-    });
+  navigateToCard = (card) => () => {
+    // this.props.navigation.navigate('ConfigureCards', {
+    //   cardId: card.id
+    // })
+    console.log(card);
   };
 
   render() {
-    const { decks } = this.state;
+    const { deck } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.list}>
           <FlatList
-            data={decks}
+            data={deck.cards}
             renderItem={({ item }) => (
-              <ListLinkRow onPress={this.navigateToDeck(item)} text={item.name} otherStyles={[deckStyles.listRow]} />
+              <ListLinkRow onPress={this.navigateToCard(item)} text={item} otherStyles={[deckStyles.listRow]} />
             )}
-            keyExtractor={(item) => item.name}
+            keyExtractor={(item, index) => index.toString()}
           />
         </View>
       </SafeAreaView>
@@ -45,4 +45,4 @@ class DeckListScreen extends React.Component {
   }
 }
 
-export default DeckListScreen;
+export default DeckScreen;

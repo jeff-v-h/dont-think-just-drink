@@ -1,4 +1,5 @@
 import { GameTypesEnum } from '../enums';
+import uuid from 'uuid';
 
 export const cardContentList = [
   'If you can speak another language, take 2 sips',
@@ -194,6 +195,7 @@ export const cardContentList = [
 ];
 
 const standardDeck = {
+  id: uuid.v1(),
   name: 'Standard',
   cards: cardContentList,
   type: GameTypesEnum.standard
