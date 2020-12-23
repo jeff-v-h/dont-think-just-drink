@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { moderateScale, scale } from '../utils/scaling';
-
-export const colours = {
-  coral: '#FF7F50',
-  white: '#fff'
-};
+import { colours } from './variables';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +21,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%'
+  },
+  list: {
+    flex: 1,
     width: '100%'
   },
   menuRow: {
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   itemText: {
-    fontSize: moderateScale(14)
+    fontSize: moderateScale(20)
   }
 });
 

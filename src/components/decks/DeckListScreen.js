@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import styles from '../../styles/styles';
-import gameStyles from '../../styles/gameStyles';
+import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
@@ -29,10 +29,12 @@ class DeckListScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={[styles.section, gameStyles.cardButtons]}>
+        <View style={styles.list}>
           <FlatList
             data={decks}
-            renderItem={({ item }) => <ListLinkRow onPress={this.navigateToDeck(item)} text={item.name} />}
+            renderItem={({ item }) => (
+              <ListLinkRow onPress={this.navigateToDeck(item)} text={item.name} otherStyles={[deckStyles.listRow]} />
+            )}
             keyExtractor={(item) => item.name}
           />
         </View>
