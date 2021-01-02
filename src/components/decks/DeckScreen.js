@@ -35,7 +35,12 @@ class DeckScreen extends React.Component {
           <FlatList
             data={deck.cards}
             renderItem={({ item }) => (
-              <ListLinkRow onPress={this.navigateToCard(item)} text={item} otherStyles={[deckStyles.listRow]} />
+              <ListLinkRow
+                onPress={this.navigateToCard(item)}
+                text={item}
+                numberOfLines={2}
+                otherStyles={[deckStyles.listRow]}
+              />
             )}
             keyExtractor={(item, index) => index.toString()}
           />

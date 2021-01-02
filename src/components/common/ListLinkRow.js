@@ -6,21 +6,25 @@ import styles from '../../styles/styles';
 ListLinkRow.propTypes = {
   onPress: PropTypes.func,
   text: PropTypes.string,
-  otherStyles: PropTypes.array
+  otherStyles: PropTypes.array,
+  numberOfLines: PropTypes.number
 };
 
 ListLinkRow.defaultProps = {
   onPress: () => {},
-  otherStyles: []
+  otherStyles: [],
+  numberOfLines: 1
 };
 
-function ListLinkRow({ onPress, text, otherStyles }) {
+function ListLinkRow({ onPress, text, numberOfLines, otherStyles }) {
   const allStyles = otherStyles.length > 0 ? [styles.touchableView, ...otherStyles] : styles.touchableView;
 
   return (
     <TouchableHighlight style={styles.touchable} onPress={onPress}>
       <View style={allStyles}>
-        <Text style={styles.itemText}>{text}</Text>
+        <Text style={styles.itemText} numberOfLines={numberOfLines}>
+          {text}
+        </Text>
       </View>
     </TouchableHighlight>
   );
