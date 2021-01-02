@@ -20,12 +20,13 @@ class DeckScreen extends React.Component {
   //   this.loadCustomDecks();
   // }
 
-  navigateToCard = (card) => () => {
-    // this.props.navigation.navigate('ConfigureCards', {
-    //   cardId: card.id
-    // })
-    console.log(card);
-  };
+  getNavigationToCardFunction = (cardText, cardIndex) => () => this.navigateToCard(cardText, cardIndex);
+
+  navigateToCard = (cardText, cardIndex) =>
+    this.props.navigation.navigate('ConfigureCards', {
+      cardIndex,
+      cardText
+    });
 
   render() {
     const { deck } = this.state;
@@ -35,9 +36,9 @@ class DeckScreen extends React.Component {
         <View style={styles.list}>
           <FlatList
             data={deck.cards}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <ListLinkRow
-                onPress={this.navigateToCard(item)}
+                onPress={this.getNavigationToCardFunction(item, index)}
                 text={item}
                 numberOfLines={2}
                 otherStyles={[deckStyles.listRow]}
@@ -47,7 +48,7 @@ class DeckScreen extends React.Component {
           />
         </View>
         <FloatingActionButton
-          onPress={() => console.log('link to edit card page')}
+          onPress={() => this.navigateToCard()}
           buttonStyles={[styles.floatingActionButton]}
           iconStyles={[styles.floatingActionIcon]}
         />

@@ -101,7 +101,7 @@ export const asianCardContentList = [
   'Pick Two: pick people playing. Everyone votes on who they think got the higher ATAR score. Losing team takes 2 sips.',
   'If YuGiOh, Naruto, or Avatar was one of your favourite shows growing up, take 3 sips.',
   "If you've ever fallen in love with rave bae, take 3 sips.",
-  'Vategories: Asian Pop Stars, loser takes 3 sips.',
+  'Categories: Asian Pop Stars, loser takes 3 sips.',
   'If your mum cut your hair and gave you a bowl cut when you were younger, show us the picture or take 4 sips.',
   'AZN Flush Check: Whoever has the worst Asian flush makes a new rule. Get creative.',
   'AZN Flush Check: Whoever has the most glorious Asian flush has to take a selfie and send it to their mum. If not, take 2 sips.',
