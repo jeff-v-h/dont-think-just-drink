@@ -5,6 +5,7 @@ import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
+import FloatingActionButton from '../common/FloatingActionButton';
 
 class DeckScreen extends React.Component {
   constructor(props) {
@@ -45,6 +46,11 @@ class DeckScreen extends React.Component {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
+        <FloatingActionButton
+          onPress={() => console.log('link to edit card page')}
+          buttonStyles={[styles.floatingActionButton]}
+          iconStyles={[styles.floatingActionIcon]}
+        />
       </SafeAreaView>
     );
   }

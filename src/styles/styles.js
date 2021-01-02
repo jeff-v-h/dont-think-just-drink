@@ -59,6 +59,21 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: moderateScale(20)
+  },
+  floatingActionButton: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 30,
+    bottom: 30,
+    backgroundColor: colours.coral,
+    borderColor: colours.coral,
+    borderRadius: 200 / 2
+  },
+  floatingActionIcon: {
+    color: colours.white
   }
 });
 
