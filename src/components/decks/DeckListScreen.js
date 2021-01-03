@@ -26,7 +26,10 @@ class DeckListScreen extends React.Component {
 
     if (!deckList || deckList.length === 0) {
       await this.saveInitialDecks();
+      return;
     }
+
+    this.setState({ decks: deckList });
   };
 
   saveInitialDecks = async () => {
