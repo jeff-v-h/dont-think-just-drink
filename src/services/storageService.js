@@ -93,9 +93,7 @@ const saveCard = async (deckId, cardIndex, cardText) => {
     if (!deck) {
       throw new Error('unable to save card because deck does not exist');
     }
-    console.log('before', deck.cards[cardIndex]);
     deck.cards[cardIndex] = cardText;
-    console.log('after', deck.cards[cardIndex]);
     await saveDeck(deck);
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to save card');

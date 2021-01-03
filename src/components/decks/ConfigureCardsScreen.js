@@ -8,22 +8,22 @@ class ConfigureCardsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { cardIndex, cardText, deck } = props.route.params;
+    const { deckId, cardIndex, cardText } = props.route.params;
     const initialCardText = cardText ?? 'If ____, drink ___ sips';
 
     this.state = {
-      deck,
+      deckId,
       cardIndex,
       cardText: initialCardText,
       originalCardText: initialCardText
     };
   }
 
-  onChangeText = (cardText) => console.log(cardText);
-  // this.setState({ cardText })
+  onChangeText = (cardText) => this.setState({ cardText });
 
-  saveCard = () => {
-    // saviong deck here will need to save entire deckList... need to change to save only deck
+  saveCard = async () => {
+    const { deckId, cardIndex, cardText } = this.state;
+    await StorageService.saveCard(deckId, cardIndex, cardText);
   };
 
   render() {
@@ -34,7 +34,7 @@ class ConfigureCardsScreen extends React.Component {
         <Text>Create your custom cards</Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => onChangeText(text)}
+          onChangeText={(text) => this.onChangeText(text)}
           value={this.state.cardText}
         />
         <View style={[styles.section]}>

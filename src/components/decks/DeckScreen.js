@@ -24,7 +24,7 @@ class DeckScreen extends React.Component {
 
   navigateToCard = (cardText, cardIndex) =>
     this.props.navigation.navigate('ConfigureCards', {
-      deck: this.state.deck,
+      deckId: this.state.deck.id,
       cardIndex,
       cardText
     });
