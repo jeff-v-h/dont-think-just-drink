@@ -24,6 +24,7 @@ class ConfigureCardsScreen extends React.Component {
   saveCard = async () => {
     const { deckId, cardIndex, cardText } = this.state;
     await StorageService.saveCard(deckId, cardIndex, cardText);
+    this.props.navigation.navigate('Deck', { deckId, reloadDeck: true });
   };
 
   render() {

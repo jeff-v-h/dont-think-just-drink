@@ -3,22 +3,35 @@ import { View, SafeAreaView, FlatList } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
-import standardDeck from '../../utils/decks/standard-deck';
-import asianDeck from '../../utils/decks/asian-deck';
 import FloatingActionButton from '../common/FloatingActionButton';
+import StorageService from '../../services/storageService';
 
 class DeckScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      deck: props.route.params.deckId === asianDeck.id ? asianDeck : standardDeck
+      deck: { cards: [] }
     };
   }
 
-  // componentDidMount() {
-  //   this.loadCustomDecks();
-  // }
+  componentDidMount() {
+    this.loadDeck();
+  }
+
+  componentDidUpdate() {
+    const { navigation, route } = this.props;
+    if (route.params.reloadDeck) {
+      this.loadDeck();
+      navigation.setParams({ reloadDeck: false });
+    }
+  }
+
+  loadDeck = async () => {
+    const { deckId } = this.props.route.params;
+    const deck = await StorageService.getDeck(deckId);
+    this.setState({ deck });
+  };
 
   getNavigationToCardFunction = (cardText, cardIndex) => () => this.navigateToCard(cardText, cardIndex);
 
