@@ -69,7 +69,7 @@ class GameScreen extends React.Component {
     );
   };
 
-  saveAsMostRecent = () => StorageService.storeData('most-recent', this.state);
+  saveAsMostRecent = () => StorageService.saveMostRecentGame('most-recent-game', this.state);
 
   seePreviousCard = () =>
     this.setState((prevState) => ({
