@@ -19,17 +19,17 @@ const getData = async (storageKey) => {
   }
 };
 
-const saveDecks = async (decks) => {
+const saveDeckList = async (deckList) => {
   try {
-    await saveData('decks', decks);
+    await saveData('deckList', deckList);
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to store deck list');
   }
 };
 
-const getDecks = async () => {
+const getDeckList = async () => {
   try {
-    return await getData('decks');
+    return await getData('deckList');
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to get deck list');
   }
@@ -37,16 +37,7 @@ const getDecks = async () => {
 
 const saveDeck = async (deck) => {
   try {
-    const decks = await getDecks();
-    const matchingDeckIndex = decks.findIndex((d) => d.id === deck.id);
-
-    if (matchingDeckIndex > -1) {
-      decks[matchingDeckIndex] = deck;
-    } else {
-      decks.push(deck);
-    }
-
-    await saveDecks(decks);
+    await saveData(`deck:${deck.id}`, deck);
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to save deck');
   }
@@ -54,10 +45,24 @@ const saveDeck = async (deck) => {
 
 const getDeck = async (deckId) => {
   try {
-    const decks = await getDecks();
-    return decks.find((d) => d.id === deckId);
+    return await getData(`deck:${deckId}`);
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to get deck');
+  }
+};
+
+const saveCard = async (deckId, cardIndex, cardText) => {
+  try {
+    const deck = await getDeck(deckId);
+    if (!deck) {
+      throw new Error('unable to save card because deck does not exist');
+    }
+    console.log('before', deck.cards[cardIndex]);
+    deck.cards[cardIndex] = cardText;
+    console.log('after', deck.cards[cardIndex]);
+    await saveDeck(deck);
+  } catch (e) {
+    Alert.alert('Storage Error', 'Unable to save card');
   }
 };
 
@@ -80,8 +85,9 @@ const getMostRecentGame = async () => {
 const StorageService = {
   saveDeck,
   getDeck,
-  saveDecks,
-  getDecks,
+  saveDeckList,
+  getDeckList,
+  saveCard,
   saveMostRecentGame,
   getMostRecentGame
 };
