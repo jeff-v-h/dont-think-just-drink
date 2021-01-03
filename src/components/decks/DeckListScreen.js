@@ -5,6 +5,7 @@ import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
+import StorageService from '../../services/storageService';
 
 class DeckListScreen extends React.Component {
   constructor(props) {
@@ -16,9 +17,22 @@ class DeckListScreen extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.loadCustomDecks();
-  // }
+  componentDidMount() {
+    this.loadCustomDecks();
+  }
+
+  loadCustomDecks = async () => {
+    const deckList = await StorageService.getDeckList();
+
+    if (!deckList || deckList.length === 0) {
+      await this.saveInitialDecks();
+    }
+  };
+
+  saveInitialDecks = async () => {
+    await StorageService.saveNewDeck(standardDeck);
+    await StorageService.saveNewDeck(asianDeck);
+  };
 
   navigateToDeck = (deck) => () => {
     this.props.navigation.navigate('Deck', {

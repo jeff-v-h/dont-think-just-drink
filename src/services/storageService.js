@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
+import uuid from 'uuid';
 
 const saveData = async (storageKey, value) => {
   try {
@@ -19,6 +20,11 @@ const getData = async (storageKey) => {
   }
 };
 
+const clearAllData = async () => {
+  await AsyncStorage.clear();
+  console.log('all cleared');
+};
+
 const saveDeckList = async (deckList) => {
   try {
     await saveData('deckList', deckList);
@@ -35,6 +41,14 @@ const getDeckList = async () => {
   }
 };
 
+const clearDeckList = async () => {
+  try {
+    await saveData('deckList', []);
+  } catch (e) {
+    Alert.alert('Storage Error', 'Unable to clear deck list');
+  }
+};
+
 const saveDeck = async (deck) => {
   try {
     await saveData(`deck:${deck.id}`, deck);
@@ -48,6 +62,28 @@ const getDeck = async (deckId) => {
     return await getData(`deck:${deckId}`);
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to get deck');
+  }
+};
+
+const saveNewDeck = async (newDeck) => {
+  try {
+    let deckList = await getDeckList();
+
+    if (!deckList) {
+      deckList = [];
+    }
+
+    if (!newDeck.id) {
+      newDeck.id = uuid.v1();
+    }
+
+    const newDeckReference = { ...newDeck };
+    delete newDeckReference.cards;
+    deckList.push(newDeckReference);
+
+    await Promise.all([saveDeckList(deckList), saveDeck(newDeck)]);
+  } catch (e) {
+    Alert.alert('Storage Error', 'Unable to save new deck');
   }
 };
 
@@ -83,10 +119,13 @@ const getMostRecentGame = async () => {
 };
 
 const StorageService = {
+  clearAllData,
   saveDeck,
   getDeck,
   saveDeckList,
   getDeckList,
+  clearDeckList,
+  saveNewDeck,
   saveCard,
   saveMostRecentGame,
   getMostRecentGame

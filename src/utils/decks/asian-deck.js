@@ -1,5 +1,4 @@
 import { GameTypesEnum } from '../enums';
-import uuid from 'uuid';
 
 export const asianCardContentList = [
   'If your parents had/currently have a small business, take 3 sips',
@@ -111,7 +110,7 @@ export const asianCardContentList = [
 ];
 
 const asianDeck = {
-  id: uuid.v1(),
+  id: 'c308e166-4d70-11eb-ae93-0242ac130002',
   name: 'Asian',
   cards: asianCardContentList,
   type: GameTypesEnum.asian
