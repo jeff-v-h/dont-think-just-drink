@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import StorageService from '../../services/storageService';
 import AppButton from '../common/AppButton';
 import styles from '../../styles/styles';
@@ -9,21 +9,49 @@ class ConfigureCardsScreen extends React.Component {
   constructor(props) {
     super(props);
 
-    const { deckId, cardIndex, cardText } = props.route.params;
-    const initialCardText = cardText;
+    const { deckId, cardIndex, cards } = props.route.params;
+    const initialText = cards[cardIndex] ?? '';
 
     this.state = {
       deckId,
-      cardIndex,
-      cardText: initialCardText,
-      originalCardText: initialCardText
+      cardIndex: cardIndex ?? cards.length,
+      cardText: initialText,
+      originalCardText: initialText,
+      cards
     };
   }
+
+  componentDidUpdate() {
+    const { navigation, route } = this.props;
+    if (route.params.reloadCard) {
+      this.refreshCard();
+      navigation.setParams({ reloadCard: false });
+    }
+  }
+
+  refreshCard = () => {
+    const { deckId, cardIndex, cards } = this.props.route.params;
+    const initialText = cards[cardIndex];
+
+    this.setState({
+      deckId,
+      cardIndex,
+      cardText: initialText,
+      originalCardText: initialText
+    });
+  };
 
   onChangeText = (cardText) => this.setState({ cardText });
 
   goPreviousCard = () => {
-    console.log('back');
+    const { cards, deckId, cardIndex } = this.state;
+    this.props.navigation.navigate('ConfigureCards', {
+      deckId: deckId,
+      cardIndex: cardIndex - 1,
+      cardText: cards[cardIndex - 1],
+      cards,
+      reloadCard: true
+    });
   };
 
   goNextCard = () => {

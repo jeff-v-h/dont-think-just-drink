@@ -33,13 +33,13 @@ class DeckScreen extends React.Component {
     this.setState({ deck });
   };
 
-  getNavigationToCardFunction = (cardText, cardIndex) => () => this.navigateToCard(cardText, cardIndex);
+  getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);
 
-  navigateToCard = (cardText, cardIndex) =>
+  navigateToCard = (cardIndex) =>
     this.props.navigation.navigate('ConfigureCards', {
       deckId: this.state.deck.id,
       cardIndex,
-      cardText
+      cards: this.state.deck.cards
     });
 
   render() {
@@ -52,7 +52,7 @@ class DeckScreen extends React.Component {
             data={deck.cards}
             renderItem={({ item, index }) => (
               <ListLinkRow
-                onPress={this.getNavigationToCardFunction(item, index)}
+                onPress={this.getNavigationToCardFunction(index)}
                 text={item}
                 numberOfLines={2}
                 otherStyles={[deckStyles.listRow]}
