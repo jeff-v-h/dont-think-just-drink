@@ -66,6 +66,7 @@ class ConfigureCardsScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
+    const { cardIndex, cardText, cards } = this.state;
 
     return (
       <View style={[styles.container, deckStyles.configureCardsContainer]}>
@@ -73,15 +74,15 @@ class ConfigureCardsScreen extends React.Component {
           <TextInput
             style={deckStyles.configCardInput}
             onChangeText={this.onChangeText}
-            value={this.state.cardText}
+            value={cardText}
             placeholder="If ____, drink ___ sips"
             multiline={true}
           />
         </View>
         <View style={[styles.section, deckStyles.configCardButtons]}>
           <View style={[styles.buttonsRow]}>
-            <AppButton title="<" onPress={this.goPreviousCard} />
-            <AppButton title=">" onPress={this.goNextCard} />
+            <AppButton title="<" onPress={this.goPreviousCard} disabled={cardIndex === 0} />
+            <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length - 1} />
           </View>
           <View style={[styles.buttonsRow]}>
             <AppButton title="Cancel" onPress={navigation.goBack} />

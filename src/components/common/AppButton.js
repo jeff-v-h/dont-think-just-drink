@@ -7,18 +7,20 @@ AppButton.propTypes = {
   title: PropTypes.string.isRequired,
   onPress: PropTypes.func,
   style: PropTypes.object,
-  textStyle: PropTypes.object
+  textStyle: PropTypes.object,
+  disabled: PropTypes.bool
 };
 
 AppButton.defaultProps = {
   style: styles.button,
   textStyle: styles.buttonText,
-  onPress: () => {}
+  onPress: () => {},
+  disabled: false
 };
 
-function AppButton({ title, onPress, style, textStyle }) {
+function AppButton({ title, onPress, style, textStyle, disabled }) {
   return (
-    <TouchableHighlight style={style} onPress={onPress}>
+    <TouchableHighlight style={disabled ? styles.disabledButton : style} onPress={onPress} disabled={disabled}>
       <Text style={textStyle}>{title}</Text>
     </TouchableHighlight>
   );

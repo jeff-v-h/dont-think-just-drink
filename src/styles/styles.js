@@ -38,6 +38,12 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     minWidth: scale(80)
   },
+  disabledButton: {
+    backgroundColor: colours.grey,
+    padding: moderateScale(6),
+    borderRadius: 2,
+    minWidth: scale(80)
+  },
   buttonText: {
     textAlign: 'center',
     justifyContent: 'center',
