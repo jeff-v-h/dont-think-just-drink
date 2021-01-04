@@ -31,7 +31,7 @@ const DecksNavigationStack = () => (
   <DecksStack.Navigator initialRouteName="DeckList">
     <DecksStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
     <DecksStack.Screen name="Deck" component={DeckScreen} options={{ title: 'Deck' }} />
-    <DecksStack.Screen name="ConfigureCards" component={ConfigureCardsScreen} options={{ title: 'Configuration' }} />
+    <DecksStack.Screen name="ConfigureCards" component={ConfigureCardsScreen} options={{ title: 'Configure Card' }} />
   </DecksStack.Navigator>
 );
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, SafeAreaView } from 'react-native';
 import styles from '../../styles/styles';
-import gameStyles from '../../styles/gameStyles';
 import AppText from '../common/AppText';
 import AppButton from '../common/AppButton';
 import standardDeck from '../../utils/decks/standard-deck';
@@ -82,7 +81,6 @@ class GameScreen extends React.Component {
     }));
 
   render() {
-    const { navigation } = this.props;
     const { played, cardIndexToShow, deck } = this.state;
 
     return (
@@ -90,7 +88,7 @@ class GameScreen extends React.Component {
         <View style={styles.section}>
           <AppText>{played[cardIndexToShow]}</AppText>
         </View>
-        <View style={[styles.section, gameStyles.cardButtons]}>
+        <View style={[styles.section, styles.buttonsRow]}>
           {cardIndexToShow > 0 && (
             <AppButton title="Previous" onPress={() => this.seePreviousCard()} style={styles.button} />
           )}

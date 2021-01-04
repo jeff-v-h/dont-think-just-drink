@@ -35,13 +35,19 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colours.coral,
     padding: moderateScale(6),
-    borderRadius: 2
+    borderRadius: 2,
+    minWidth: scale(80)
   },
   buttonText: {
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: moderateScale(20),
     color: colours.white
+  },
+  buttonsRow: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   touchable: {
     width: '100%',
