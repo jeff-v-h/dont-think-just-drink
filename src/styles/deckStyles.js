@@ -17,6 +17,10 @@ const deckStyles = StyleSheet.create({
   configCardInput: {
     padding: moderateScale(20),
     fontSize: moderateScale(24)
+  },
+  configCardButtons: {
+    justifyContent: 'space-between',
+    paddingBottom: verticalScale(100)
   }
 });
 

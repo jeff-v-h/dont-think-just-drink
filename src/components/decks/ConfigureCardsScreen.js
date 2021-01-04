@@ -22,6 +22,14 @@ class ConfigureCardsScreen extends React.Component {
 
   onChangeText = (cardText) => this.setState({ cardText });
 
+  goPreviousCard = () => {
+    console.log('back');
+  };
+
+  goNextCard = () => {
+    console.log('next');
+  };
+
   saveCard = async () => {
     const { deckId, cardIndex, cardText } = this.state;
     await StorageService.saveCard(deckId, cardIndex, cardText);
@@ -36,15 +44,21 @@ class ConfigureCardsScreen extends React.Component {
         <View style={deckStyles.configCardView}>
           <TextInput
             style={deckStyles.configCardInput}
-            onChangeText={(text) => this.onChangeText(text)}
+            onChangeText={this.onChangeText}
             value={this.state.cardText}
             placeholder="If ____, drink ___ sips"
             multiline={true}
           />
         </View>
-        <View style={[styles.section, styles.buttonsRow]}>
-          <AppButton title="Cancel" onPress={() => navigation.goBack()} />
-          <AppButton title="Save" onPress={() => this.saveCard()} />
+        <View style={[styles.section, deckStyles.configCardButtons]}>
+          <View style={[styles.buttonsRow]}>
+            <AppButton title="<" onPress={this.goPreviousCard} />
+            <AppButton title=">" onPress={this.goNextCard} />
+          </View>
+          <View style={[styles.buttonsRow]}>
+            <AppButton title="Cancel" onPress={navigation.goBack} />
+            <AppButton title="Save" onPress={this.saveCard} />
+          </View>
         </View>
       </View>
     );
