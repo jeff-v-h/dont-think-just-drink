@@ -44,18 +44,21 @@ class ConfigureCardsScreen extends React.Component {
   onChangeText = (cardText) => this.setState({ cardText });
 
   goPreviousCard = () => {
-    const { cards, deckId, cardIndex } = this.state;
+    const { cards, cardIndex } = this.state;
     this.props.navigation.navigate('ConfigureCards', {
-      deckId: deckId,
       cardIndex: cardIndex - 1,
       cardText: cards[cardIndex - 1],
-      cards,
       reloadCard: true
     });
   };
 
   goNextCard = () => {
-    console.log('next');
+    const { cards, cardIndex } = this.state;
+    this.props.navigation.navigate('ConfigureCards', {
+      cardIndex: cardIndex + 1,
+      cardText: cards[cardIndex + 1],
+      reloadCard: true
+    });
   };
 
   saveCard = async () => {
