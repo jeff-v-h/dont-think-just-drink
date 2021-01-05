@@ -7,7 +7,6 @@ export const cardContentList = [
   'Drink if you are 165cm or shorter',
   'Every lady take 2 sips',
   'Every man take 2 sips',
-  "If you've every owned Crocs, drink.",
   'Whoever has a tattoo must drink, then show everyone their dope ink.',
   "Drink if you won a superaltive in high school. What'd ya win?",
   "If you've ever owned Crocs, drink.",

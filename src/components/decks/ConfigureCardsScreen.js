@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Animated, Easing } from 'react-native';
 import StorageService from '../../services/storageService';
 import AppButton from '../common/AppButton';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
+import LottieView from 'lottie-react-native';
 
 class ConfigureCardsScreen extends React.Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class ConfigureCardsScreen extends React.Component {
       cardIndex: cardIndex ?? cards.length,
       cardText: initialText,
       originalCardText: initialText,
-      cards
+      cards,
+      tickProgress: new Animated.Value(0)
     };
   }
 
@@ -64,8 +66,19 @@ class ConfigureCardsScreen extends React.Component {
   saveCard = async () => {
     const { deckId, cardIndex, cardText } = this.state;
     await StorageService.saveCard(deckId, cardIndex, cardText);
-    this.props.navigation.navigate('Deck', { deckId, reloadDeck: true });
+    this.animateSuccess();
   };
+
+  animateSuccess = () => {
+    Animated.timing(this.state.tickProgress, {
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start(this.resetSuccessAnimation);
+  };
+
+  resetSuccessAnimation = () => this.setState({ tickProgress: new Animated.Value(0) });
 
   render() {
     const { navigation } = this.props;
@@ -73,6 +86,7 @@ class ConfigureCardsScreen extends React.Component {
 
     return (
       <View style={[styles.container, deckStyles.configureCardsContainer]}>
+        <LottieView source={require('../../../assets/5449-success-tick.json')} progress={this.state.tickProgress} />
         <View style={deckStyles.configCardView}>
           <TextInput
             style={deckStyles.configCardInput}
