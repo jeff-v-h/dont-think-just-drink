@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { moderateScale, scale } from '../utils/scaling';
+import { moderateScale, scale, verticalScale } from '../utils/scaling';
 import { colours } from './variables';
 
 const styles = StyleSheet.create({
@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: moderateScale(10)
+  },
+  scrollContainer: {
+    flex: 1,
     padding: moderateScale(10)
   },
   text: {
@@ -53,7 +57,8 @@ const styles = StyleSheet.create({
   buttonsRow: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    marginBottom: verticalScale(10)
   },
   touchable: {
     width: '100%',

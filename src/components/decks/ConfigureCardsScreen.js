@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, TextInput, Animated, Easing } from 'react-native';
+import { ScrollView, View, TextInput, Animated, Easing } from 'react-native';
 import StorageService from '../../services/storageService';
 import AppButton from '../common/AppButton';
 import styles from '../../styles/styles';
@@ -90,28 +90,24 @@ class ConfigureCardsScreen extends React.Component {
     const { cardIndex, cardText, cards } = this.state;
 
     return (
-      <View style={[styles.container, deckStyles.configureCardsContainer]}>
+      <ScrollView style={[styles.scrollContainer]}>
         <LottieView source={require('../../../assets/5449-success-tick.json')} progress={this.state.tickProgress} />
-        <View style={deckStyles.configCardView}>
-          <TextInput
-            style={deckStyles.configCardInput}
-            onChangeText={this.onChangeText}
-            value={cardText}
-            placeholder="If ____, drink ___ sips"
-            multiline={true}
-          />
+        <TextInput
+          style={deckStyles.configCardInput}
+          onChangeText={this.onChangeText}
+          value={cardText}
+          placeholder="If ____, drink ___ sips"
+          multiline={true}
+        />
+        <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
+          <AppButton title="<" onPress={this.goPreviousCard} disabled={cardIndex === 0} />
+          <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length - 1} />
         </View>
-        <View style={[styles.section, deckStyles.configCardButtons]}>
-          <View style={[styles.buttonsRow]}>
-            <AppButton title="<" onPress={this.goPreviousCard} disabled={cardIndex === 0} />
-            <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length - 1} />
-          </View>
-          <View style={[styles.buttonsRow]}>
-            <AppButton title="Cancel" onPress={navigation.goBack} />
-            <AppButton title="Save" onPress={this.saveCard} />
-          </View>
+        <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
+          <AppButton title="Cancel" onPress={navigation.goBack} />
+          <AppButton title="Save" onPress={this.saveCard} />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

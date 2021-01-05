@@ -5,22 +5,15 @@ const deckStyles = StyleSheet.create({
   listRow: {
     height: verticalScale(50)
   },
-  configureCardsContainer: {
-    justifyContent: 'space-around'
-  },
-  configCardView: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
+  configCardInput: {
+    paddingLeft: moderateScale(20),
+    paddingRight: moderateScale(20),
+    fontSize: moderateScale(24),
+    height: verticalScale(300),
     width: '100%'
   },
-  configCardInput: {
-    padding: moderateScale(20),
-    fontSize: moderateScale(24)
-  },
-  configCardButtons: {
-    justifyContent: 'space-between',
-    paddingBottom: verticalScale(100)
+  configButtonsRow: {
+    marginBottom: verticalScale(50)
   }
 });
 
