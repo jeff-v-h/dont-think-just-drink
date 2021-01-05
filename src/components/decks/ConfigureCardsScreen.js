@@ -69,16 +69,21 @@ class ConfigureCardsScreen extends React.Component {
     this.animateSuccess();
   };
 
-  animateSuccess = () => {
+  animateSuccess = () =>
     Animated.timing(this.state.tickProgress, {
-      toValue: 1,
-      duration: 1000,
+      toValue: 1.5,
+      duration: 2000,
       easing: Easing.linear,
       useNativeDriver: true
     }).start(this.resetSuccessAnimation);
-  };
 
-  resetSuccessAnimation = () => this.setState({ tickProgress: new Animated.Value(0) });
+  resetSuccessAnimation = () =>
+    Animated.timing(this.state.tickProgress, {
+      toValue: 0,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start();
 
   render() {
     const { navigation } = this.props;
