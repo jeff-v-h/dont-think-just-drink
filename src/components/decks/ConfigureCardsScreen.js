@@ -63,6 +63,11 @@ class ConfigureCardsScreen extends React.Component {
     });
   };
 
+  resetCardText = () =>
+    this.setState((prevState) => ({
+      cardText: prevState.originalCardText
+    }));
+
   saveCard = async () => {
     const { deckId, cardIndex, cardText } = this.state;
     await StorageService.saveCard(deckId, cardIndex, cardText);
@@ -86,8 +91,7 @@ class ConfigureCardsScreen extends React.Component {
     }).start();
 
   render() {
-    const { navigation } = this.props;
-    const { cardIndex, cardText, cards } = this.state;
+    const { cardIndex, cardText, originalCardText, cards } = this.state;
 
     return (
       <ScrollView style={[styles.scrollContainer]}>
@@ -104,7 +108,7 @@ class ConfigureCardsScreen extends React.Component {
           <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length - 1} />
         </View>
         <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
-          <AppButton title="Cancel" onPress={navigation.goBack} />
+          <AppButton title="Reset" onPress={this.resetCardText} disabled={cardText === originalCardText} />
           <AppButton title="Save" onPress={this.saveCard} />
         </View>
       </ScrollView>
