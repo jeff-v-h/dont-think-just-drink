@@ -5,6 +5,7 @@ import AppButton from '../common/AppButton';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import LottieView from 'lottie-react-native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 class ConfigureCardsScreen extends React.Component {
   constructor(props) {
@@ -91,28 +92,45 @@ class ConfigureCardsScreen extends React.Component {
       useNativeDriver: true
     }).start();
 
+  _onHandlerStateChange = (event) => {
+    // Only call functions once the user has finished swiping left or right
+    if (event.nativeEvent.state === State.END) {
+      const { translationX } = event.nativeEvent;
+      if (translationX < 0) {
+        console.log('left');
+        return;
+      }
+      if (translationX > 0) {
+        console.log('right');
+        return;
+      }
+    }
+  };
+
   render() {
     const { cardIndex, cardText, originalCardText, cards } = this.state;
 
     return (
-      <ScrollView style={[styles.scrollContainer]}>
-        <LottieView source={require('../../../assets/5449-success-tick.json')} progress={this.state.tickProgress} />
-        <TextInput
-          style={deckStyles.configCardInput}
-          onChangeText={this.onChangeText}
-          value={cardText}
-          placeholder="If ____, drink ___ sips"
-          multiline={true}
-        />
-        <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
-          <AppButton title="<" onPress={this.goPreviousCard} disabled={cardIndex === 0} />
-          <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length - 1} />
-        </View>
-        <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
-          <AppButton title="Reset" onPress={this.resetCardText} disabled={cardText === originalCardText} />
-          <AppButton title="Save" onPress={this.saveCard} />
-        </View>
-      </ScrollView>
+      <PanGestureHandler onHandlerStateChange={this._onHandlerStateChange}>
+        <ScrollView style={styles.scrollContainer}>
+          <LottieView source={require('../../../assets/5449-success-tick.json')} progress={this.state.tickProgress} />
+          <TextInput
+            style={deckStyles.configCardInput}
+            onChangeText={this.onChangeText}
+            value={cardText}
+            placeholder="If ____, drink ___ sips"
+            multiline={true}
+          />
+          <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
+            <AppButton title="<" onPress={this.goPreviousCard} disabled={cardIndex === 0} />
+            <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length - 1} />
+          </View>
+          <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
+            <AppButton title="Reset" onPress={this.resetCardText} disabled={cardText === originalCardText} />
+            <AppButton title="Save" onPress={this.saveCard} />
+          </View>
+        </ScrollView>
+      </PanGestureHandler>
     );
   }
 }
