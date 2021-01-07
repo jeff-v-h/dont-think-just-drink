@@ -93,15 +93,17 @@ class ConfigureCardsScreen extends React.Component {
     }).start();
 
   _onHandlerStateChange = (event) => {
-    // Only call functions once the user has finished swiping left or right
+    // Only call functions once the user has finished swiping right or left a certain amount
     if (event.nativeEvent.state === State.END) {
       const { translationX } = event.nativeEvent;
-      if (translationX < 0) {
-        console.log('left');
+      const { cardIndex, cards } = this.state;
+
+      if (translationX > 50 && cardIndex !== 0) {
+        this.goPreviousCard();
         return;
       }
-      if (translationX > 0) {
-        console.log('right');
+      if (translationX < -50 && cardIndex !== cards.length - 1) {
+        this.goNextCard();
         return;
       }
     }
