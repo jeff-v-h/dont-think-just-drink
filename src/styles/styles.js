@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
     paddingBottom: scale(5),
     paddingLeft: '3%',
     paddingRight: '3%',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    borderBottomColor: colours.grey
   },
   touchableView: {
     height: '100%',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, Text } from 'react-native';
+import { View, SafeAreaView, FlatList, TextInput } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
@@ -47,6 +47,11 @@ class DeckScreen extends React.Component {
     return newDeck;
   };
 
+  onChangeDeckName = (text) =>
+    this.setState((prevState) => ({
+      deck: { ...prevState.deck, name: text }
+    }));
+
   getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);
 
   navigateToCard = (cardIndex) =>
@@ -62,7 +67,7 @@ class DeckScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={deckStyles.titleRow}>
-          <Text style={deckStyles.title}>{deck.name}</Text>
+          <TextInput style={deckStyles.titleInput} value={deck.name} onChangeText={this.onChangeDeckName} />
         </View>
         <View style={styles.list}>
           <FlatList
