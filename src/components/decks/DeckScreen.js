@@ -1,17 +1,21 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList } from 'react-native';
+import { View, SafeAreaView, FlatList, Text } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
 import FloatingActionButton from '../common/FloatingActionButton';
 import StorageService from '../../services/storageService';
+import { GameTypesEnum } from '../../utils/enums';
 
 class DeckScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      deck: { cards: [] }
+      deck: {
+        name: '',
+        cards: []
+      }
     };
   }
 
@@ -29,8 +33,18 @@ class DeckScreen extends React.Component {
 
   loadDeck = async () => {
     const { deckId } = this.props.route.params;
-    const deck = await StorageService.getDeck(deckId);
+    const deck = deckId ? await StorageService.getDeck(deckId) : await this.createNewDeck();
     this.setState({ deck });
+  };
+
+  createNewDeck = async () => {
+    const newDeck = {
+      name: 'My New Deck',
+      cards: [],
+      type: GameTypesEnum.custom
+    };
+    newDeck.id = await StorageService.saveNewDeck(newDeck);
+    return newDeck;
   };
 
   getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);
@@ -47,6 +61,9 @@ class DeckScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
+        <View style={deckStyles.titleRow}>
+          <Text style={deckStyles.title}>{deck.name}</Text>
+        </View>
         <View style={styles.list}>
           <FlatList
             data={deck.cards}

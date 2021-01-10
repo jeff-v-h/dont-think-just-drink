@@ -6,6 +6,7 @@ import ListLinkRow from '../common/ListLinkRow';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
 import StorageService from '../../services/storageService';
+import FloatingActionButton from '../common/FloatingActionButton';
 
 class DeckListScreen extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class DeckListScreen extends React.Component {
 
   navigateToDeck = (deck) => () => {
     this.props.navigation.navigate('Deck', {
-      deckId: deck.id
+      deckId: deck?.id ?? ''
     });
   };
 
@@ -57,6 +58,11 @@ class DeckListScreen extends React.Component {
             keyExtractor={(item) => item.name}
           />
         </View>
+        <FloatingActionButton
+          onPress={this.navigateToDeck()}
+          buttonStyles={[styles.floatingActionButton]}
+          iconStyles={[styles.floatingActionIcon]}
+        />
       </SafeAreaView>
     );
   }

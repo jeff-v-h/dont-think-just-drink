@@ -82,6 +82,8 @@ const saveNewDeck = async (newDeck) => {
     deckList.push(newDeckReference);
 
     await Promise.all([saveDeckList(deckList), saveDeck(newDeck)]);
+
+    return newDeck.id;
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to save new deck');
   }
