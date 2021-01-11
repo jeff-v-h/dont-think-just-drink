@@ -108,6 +108,36 @@ const saveNewDeck = async (newDeck) => {
   }
 };
 
+const saveNewDecks = async (newDecks) => {
+  try {
+    let deckList = await getDeckList();
+
+    if (!deckList) {
+      deckList = [];
+    }
+
+    const promises = [];
+
+    newDecks.forEach((newDeck) => {
+      if (!newDeck.id) {
+        newDeck.id = uuid.v1();
+      }
+
+      const newDeckReference = { ...newDeck };
+      delete newDeckReference.cards;
+
+      deckList.push(newDeckReference);
+      promises.push(saveDeck(newDeck));
+    });
+
+    promises.push(saveDeckList(deckList));
+
+    await Promise.all(promises);
+  } catch (e) {
+    Alert.alert('Storage Error', 'Unable to save new decks');
+  }
+};
+
 const saveCard = async (deckId, cardIndex, cardText) => {
   try {
     const deck = await getDeck(deckId);
@@ -146,6 +176,7 @@ const StorageService = {
   getDeckList,
   clearDeckList,
   saveNewDeck,
+  saveNewDecks,
   saveCard,
   saveMostRecentGame,
   getMostRecentGame

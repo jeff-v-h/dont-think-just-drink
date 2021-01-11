@@ -33,18 +33,16 @@ class DeckListScreen extends React.Component {
     const deckList = await StorageService.getDeckList();
 
     if (!deckList || deckList.length === 0) {
-      await this.saveInitialDecks();
-      this.setState({ decks: [standardDeck, asianDeck] });
+      const newDecks = [standardDeck, asianDeck];
+      await this.saveInitialDecks(newDecks);
+      this.setState({ decks: newDecks });
       return;
     }
 
     this.setState({ decks: deckList });
   };
 
-  saveInitialDecks = async () => {
-    await StorageService.saveNewDeck(standardDeck);
-    await StorageService.saveNewDeck(asianDeck);
-  };
+  saveInitialDecks = async (decks) => await StorageService.saveNewDecks(decks);
 
   navigateToDeck = (deck) => () => {
     this.props.navigation.navigate('Deck', {
