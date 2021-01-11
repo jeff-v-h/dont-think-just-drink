@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, TextInput } from 'react-native';
+import { View, SafeAreaView, FlatList, TextInput, Button } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
 import FloatingActionButton from '../common/FloatingActionButton';
 import StorageService from '../../services/storageService';
 import { GameTypesEnum } from '../../utils/enums';
+import AppButton from '../common/AppButton';
 
 class DeckScreen extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class DeckScreen extends React.Component {
   loadDeck = async () => {
     const { deckId } = this.props.route.params;
     const deck = deckId ? await StorageService.getDeck(deckId) : await this.createNewDeck();
-    this.setState({ deck });
+    this.setState({ deck, originalDeckName: deck.name });
   };
 
   createNewDeck = async () => {
@@ -52,6 +53,12 @@ class DeckScreen extends React.Component {
       deck: { ...prevState.deck, name: text }
     }));
 
+  saveDeckName = async () => {
+    const { deck } = this.state;
+    await StorageService.saveDeckList(deck);
+    this.setState({ originalDeckName: deck.name });
+  };
+
   getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);
 
   navigateToCard = (cardIndex) =>
@@ -62,12 +69,22 @@ class DeckScreen extends React.Component {
     });
 
   render() {
-    const { deck } = this.state;
+    const { deck, originalDeckName } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={deckStyles.titleRow}>
           <TextInput style={deckStyles.titleInput} value={deck.name} onChangeText={this.onChangeDeckName} />
+          <View style={deckStyles.titleSaveWrapper}>
+            <AppButton
+              title="Save"
+              onPress={this.saveDeckName}
+              style={deckStyles.titleSave}
+              disabledStyle={deckStyles.titleSaveDisabled}
+              textStyle={deckStyles.titleSaveText}
+              disabled={deck.name === originalDeckName}
+            />
+          </View>
         </View>
         <View style={styles.list}>
           <FlatList

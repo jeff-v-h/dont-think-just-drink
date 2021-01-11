@@ -12,16 +12,28 @@ AppButton.propTypes = {
 };
 
 AppButton.defaultProps = {
-  style: styles.button,
-  textStyle: styles.buttonText,
   onPress: () => {},
   disabled: false
 };
 
-function AppButton({ title, onPress, style, textStyle, disabled }) {
+function AppButton({ title, onPress, disabled, style, disabledStyle, textStyle }) {
+  const allStyles = [disabled ? styles.disabledButton : styles.button];
+
+  if (disabled && disabledStyle) {
+    allStyles.push(disabledStyle);
+  }
+  if (!disabled && style) {
+    allStyles.push(style);
+  }
+
+  const allTextStyles = [styles.buttonText];
+  if (textStyle) {
+    allTextStyles.push(textStyle);
+  }
+
   return (
-    <TouchableHighlight style={disabled ? styles.disabledButton : style} onPress={onPress} disabled={disabled}>
-      <Text style={textStyle}>{title}</Text>
+    <TouchableHighlight style={allStyles} onPress={onPress} disabled={disabled}>
+      <Text style={allTextStyles}>{title}</Text>
     </TouchableHighlight>
   );
 }

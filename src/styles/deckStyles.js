@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { verticalScale, moderateScale } from '../utils/scaling';
+import { verticalScale, moderateScale, scale } from '../utils/scaling';
 import { colours } from './variables';
 
 const deckStyles = StyleSheet.create({
@@ -18,18 +18,34 @@ const deckStyles = StyleSheet.create({
   },
   titleRow: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    width: '100%'
-  },
-  titleInput: {
-    paddingLeft: moderateScale(10),
-    paddingRight: moderateScale(10),
-    marginBottom: verticalScale(10),
-    paddingBottom: verticalScale(5),
-    fontSize: moderateScale(26),
+    justifyContent: 'space-between',
     width: '100%',
+    marginBottom: verticalScale(10),
     borderBottomColor: colours.black,
     borderBottomWidth: 1
+  },
+  titelInputView: {
+    flex: 1
+  },
+  titleInput: {
+    flex: 1,
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10),
+    fontSize: moderateScale(26)
+  },
+  titleSaveWrapper: {
+    padding: moderateScale(5)
+  },
+  titleSave: {
+    padding: moderateScale(5),
+    minWidth: scale(55)
+  },
+  titleSaveDisabled: {
+    padding: moderateScale(5),
+    minWidth: scale(55)
+  },
+  titleSaveText: {
+    fontSize: moderateScale(16)
   }
 });
 
