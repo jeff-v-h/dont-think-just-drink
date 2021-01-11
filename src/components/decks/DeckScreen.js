@@ -55,8 +55,9 @@ class DeckScreen extends React.Component {
 
   saveDeckName = async () => {
     const { deck } = this.state;
-    await StorageService.saveDeckList(deck);
+    await StorageService.updateDeckName(deck);
     this.setState({ originalDeckName: deck.name });
+    this.props.navigation.setParams({ reloadDeckList: true });
   };
 
   getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);

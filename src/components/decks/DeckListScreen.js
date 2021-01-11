@@ -13,8 +13,7 @@ class DeckListScreen extends React.Component {
     super(props);
 
     this.state = {
-      decks: [standardDeck, asianDeck],
-      currentDeck: standardDeck.name
+      decks: []
     };
   }
 
@@ -22,11 +21,20 @@ class DeckListScreen extends React.Component {
     this.loadCustomDecks();
   }
 
+  componentDidUpdate() {
+    const { navigation, route } = this.props;
+    if (route.params?.reloadDeckList) {
+      this.loadCustomDecks();
+      navigation.setParams({ reloadDeckList: false });
+    }
+  }
+
   loadCustomDecks = async () => {
     const deckList = await StorageService.getDeckList();
 
     if (!deckList || deckList.length === 0) {
       await this.saveInitialDecks();
+      this.setState({ decks: [standardDeck, asianDeck] });
       return;
     }
 

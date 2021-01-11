@@ -44,6 +44,7 @@ const getDeckList = async () => {
 const clearDeckList = async () => {
   try {
     await saveData('deckList', []);
+    console.log('deck list cleared');
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to clear deck list');
   }
@@ -62,6 +63,24 @@ const getDeck = async (deckId) => {
     return await getData(`deck:${deckId}`);
   } catch (e) {
     Alert.alert('Storage Error', 'Unable to get deck');
+  }
+};
+
+const updateDeckName = async (deck) => {
+  try {
+    const deckList = await getDeckList();
+    const deckIndex = deckList.findIndex((d) => d.id === deck.id);
+
+    if (deckIndex === -1) {
+      throw new Error('Deck could not be found in list');
+    }
+
+    deckList[deckIndex].name = deck.name;
+
+    saveDeckList(deckList);
+    saveDeck(deck);
+  } catch (e) {
+    Alert.alert('Storage Error', 'Unable to save deck name');
   }
 };
 
@@ -122,6 +141,7 @@ const StorageService = {
   clearAllData,
   saveDeck,
   getDeck,
+  updateDeckName,
   saveDeckList,
   getDeckList,
   clearDeckList,

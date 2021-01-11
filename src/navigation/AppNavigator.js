@@ -8,6 +8,7 @@ import GameScreen from '../components/game/GameScreen';
 import DeckListScreen from '../components/decks/DeckListScreen';
 import DeckScreen from '../components/decks/DeckScreen';
 import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
+import { HeaderBackButton } from '@react-navigation/stack';
 
 const Drawer = createDrawerNavigator();
 const GameStack = createStackNavigator();
@@ -30,7 +31,22 @@ const RulesNavigationStack = () => (
 const DecksNavigationStack = () => (
   <DecksStack.Navigator initialRouteName="DeckList">
     <DecksStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
-    <DecksStack.Screen name="Deck" component={DeckScreen} options={{ title: 'Deck' }} />
+    <DecksStack.Screen
+      name="Deck"
+      component={DeckScreen}
+      options={({ navigation, route }) => ({
+        headerLeft: (props) => (
+          <HeaderBackButton
+            {...props}
+            onPress={() =>
+              navigation.navigate('DeckList', {
+                reloadDeckList: route.params.reloadDeckList
+              })
+            }
+          />
+        )
+      })}
+    />
     <DecksStack.Screen name="ConfigureCards" component={ConfigureCardsScreen} options={{ title: 'Configure Card' }} />
   </DecksStack.Navigator>
 );
