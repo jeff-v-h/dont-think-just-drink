@@ -86,18 +86,13 @@ const updateDeckName = async (deck) => {
 
 const saveNewDeck = async (newDeck) => {
   try {
-    let deckList = await getDeckList();
-
-    if (!deckList) {
-      deckList = [];
-    }
+    const deckList = (await getDeckList()) ?? [];
 
     if (!newDeck.id) {
       newDeck.id = uuid.v1();
     }
 
-    const newDeckReference = { ...newDeck };
-    delete newDeckReference.cards;
+    const { cards, ...newDeckReference } = newDeck;
     deckList.push(newDeckReference);
 
     await Promise.all([saveDeckList(deckList), saveDeck(newDeck)]);
@@ -110,12 +105,7 @@ const saveNewDeck = async (newDeck) => {
 
 const saveNewDecks = async (newDecks) => {
   try {
-    let deckList = await getDeckList();
-
-    if (!deckList) {
-      deckList = [];
-    }
-
+    const deckList = (await getDeckList()) ?? [];
     const promises = [];
 
     newDecks.forEach((newDeck) => {
@@ -123,8 +113,7 @@ const saveNewDecks = async (newDecks) => {
         newDeck.id = uuid.v1();
       }
 
-      const newDeckReference = { ...newDeck };
-      delete newDeckReference.cards;
+      const { cards, ...newDeckReference } = newDeck;
 
       deckList.push(newDeckReference);
       promises.push(saveDeck(newDeck));
