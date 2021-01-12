@@ -7,8 +7,7 @@ import FloatingActionButton from '../common/FloatingActionButton';
 import StorageService from '../../services/storageService';
 import { GameTypesEnum } from '../../utils/enums';
 import AppButton from '../common/AppButton';
-
-const errorTitle = 'Error';
+import { ERROR_TITLE } from '../../utils/constants';
 
 class DeckScreen extends React.Component {
   constructor(props) {
@@ -40,7 +39,7 @@ class DeckScreen extends React.Component {
       const deck = deckId ? await StorageService.getDeck(deckId) : await this.createNewDeck();
       this.setState({ deck, originalDeckName: deck.name });
     } catch (e) {
-      Alert.alert('s', e.message);
+      Alert.alert(ERROR_TITLE, e.message);
     }
   };
 
@@ -54,7 +53,7 @@ class DeckScreen extends React.Component {
       newDeck.id = await StorageService.saveNewDeck(newDeck);
       return newDeck;
     } catch (e) {
-      Alert.alert(errorTitle, e.message);
+      Alert.alert(ERROR_TITLE, e.message);
     }
   };
 
@@ -70,7 +69,7 @@ class DeckScreen extends React.Component {
       this.setState({ originalDeckName: deck.name });
       this.props.navigation.setParams({ reloadDeckList: true });
     } catch (e) {
-      Alert.alert(errorTitle, e.message);
+      Alert.alert(ERROR_TITLE, e.message);
     }
   };
 

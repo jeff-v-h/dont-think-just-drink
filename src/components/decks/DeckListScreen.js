@@ -7,6 +7,7 @@ import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
 import StorageService from '../../services/storageService';
 import FloatingActionButton from '../common/FloatingActionButton';
+import { ERROR_TITLE } from '../../utils/constants';
 
 class DeckListScreen extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class DeckListScreen extends React.Component {
 
       this.setState({ decks: deckList });
     } catch (e) {
-      Alert.alert('s', e.message);
+      Alert.alert(ERROR_TITLE, e.message);
     }
   };
 
@@ -50,7 +51,7 @@ class DeckListScreen extends React.Component {
     try {
       await StorageService.saveNewDecks(decks);
     } catch (e) {
-      Alert.alert('s', e.message);
+      Alert.alert(ERROR_TITLE, e.message);
     }
   };
 

@@ -1,8 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'uuid';
 
-const errorTitle = 'Error';
-
 const saveData = async (storageKey, value) => {
   const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
   await AsyncStorage.setItem(storageKey, stringValue);

@@ -6,6 +6,7 @@ import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import LottieView from 'lottie-react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { ERROR_TITLE } from '../../utils/constants';
 
 class ConfigureCardsScreen extends React.Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class ConfigureCardsScreen extends React.Component {
       this.animateSuccess();
       this.props.navigation.setParams({ reloadDeck: true });
     } catch (e) {
-      Alert.alert('s', e.message);
+      Alert.alert(ERROR_TITLE, e.message);
     }
   };
 
