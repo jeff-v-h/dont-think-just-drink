@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, TextInput, Button } from 'react-native';
+import { View, SafeAreaView, FlatList, TextInput, Button, Alert } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
@@ -7,6 +7,8 @@ import FloatingActionButton from '../common/FloatingActionButton';
 import StorageService from '../../services/storageService';
 import { GameTypesEnum } from '../../utils/enums';
 import AppButton from '../common/AppButton';
+
+const errorTitle = 'Error';
 
 class DeckScreen extends React.Component {
   constructor(props) {
@@ -33,19 +35,27 @@ class DeckScreen extends React.Component {
   }
 
   loadDeck = async () => {
-    const { deckId } = this.props.route.params;
-    const deck = deckId ? await StorageService.getDeck(deckId) : await this.createNewDeck();
-    this.setState({ deck, originalDeckName: deck.name });
+    try {
+      const { deckId } = this.props.route.params;
+      const deck = deckId ? await StorageService.getDeck(deckId) : await this.createNewDeck();
+      this.setState({ deck, originalDeckName: deck.name });
+    } catch (e) {
+      Alert.alert('s', e.message);
+    }
   };
 
   createNewDeck = async () => {
-    const newDeck = {
-      name: 'My New Deck',
-      cards: [],
-      type: GameTypesEnum.custom
-    };
-    newDeck.id = await StorageService.saveNewDeck(newDeck);
-    return newDeck;
+    try {
+      const newDeck = {
+        name: 'My New Deck',
+        cards: [],
+        type: GameTypesEnum.custom
+      };
+      newDeck.id = await StorageService.saveNewDeck(newDeck);
+      return newDeck;
+    } catch (e) {
+      Alert.alert(errorTitle, e.message);
+    }
   };
 
   onChangeDeckName = (text) =>
@@ -54,10 +64,14 @@ class DeckScreen extends React.Component {
     }));
 
   saveDeckName = async () => {
-    const { deck } = this.state;
-    await StorageService.updateDeckName(deck);
-    this.setState({ originalDeckName: deck.name });
-    this.props.navigation.setParams({ reloadDeckList: true });
+    try {
+      const { deck } = this.state;
+      await StorageService.updateDeckName(deck);
+      this.setState({ originalDeckName: deck.name });
+      this.props.navigation.setParams({ reloadDeckList: true });
+    } catch (e) {
+      Alert.alert(errorTitle, e.message);
+    }
   };
 
   getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);

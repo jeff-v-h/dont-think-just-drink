@@ -47,7 +47,23 @@ const DecksNavigationStack = () => (
         )
       })}
     />
-    <DecksStack.Screen name="ConfigureCards" component={ConfigureCardsScreen} options={{ title: 'Configure Card' }} />
+    <DecksStack.Screen
+      name="ConfigureCards"
+      component={ConfigureCardsScreen}
+      options={({ navigation, route }) => ({
+        title: 'Configure Card',
+        headerLeft: (props) => (
+          <HeaderBackButton
+            {...props}
+            onPress={() =>
+              navigation.navigate('Deck', {
+                reloadDeck: route.params.reloadDeck
+              })
+            }
+          />
+        )
+      })}
+    />
   </DecksStack.Navigator>
 );
 

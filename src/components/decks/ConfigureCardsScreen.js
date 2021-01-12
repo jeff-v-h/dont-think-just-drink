@@ -74,6 +74,7 @@ class ConfigureCardsScreen extends React.Component {
     await StorageService.saveCard(deckId, cardIndex, cardText);
     this.setState({ originalCardText: cardText });
     this.animateSuccess();
+    this.props.navigation.setParams({ reloadDeck: true });
   };
 
   animateSuccess = () =>
