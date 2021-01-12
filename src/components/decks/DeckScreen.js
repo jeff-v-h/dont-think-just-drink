@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, TextInput, Button, Alert } from 'react-native';
+import { View, SafeAreaView, FlatList, TextInput, Alert } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';

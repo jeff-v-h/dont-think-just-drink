@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, View, TextInput, Animated, Easing } from 'react-native';
+import { ScrollView, View, TextInput, Animated, Easing, Alert } from 'react-native';
 import StorageService from '../../services/storageService';
 import AppButton from '../common/AppButton';
 import styles from '../../styles/styles';
@@ -70,11 +70,15 @@ class ConfigureCardsScreen extends React.Component {
     }));
 
   saveCard = async () => {
-    const { deckId, cardIndex, cardText } = this.state;
-    await StorageService.saveCard(deckId, cardIndex, cardText);
-    this.setState({ originalCardText: cardText });
-    this.animateSuccess();
-    this.props.navigation.setParams({ reloadDeck: true });
+    try {
+      const { deckId, cardIndex, cardText } = this.state;
+      await StorageService.saveCard(deckId, cardIndex, cardText);
+      this.setState({ originalCardText: cardText });
+      this.animateSuccess();
+      this.props.navigation.setParams({ reloadDeck: true });
+    } catch (e) {
+      Alert.alert('s', e.message);
+    }
   };
 
   animateSuccess = () =>

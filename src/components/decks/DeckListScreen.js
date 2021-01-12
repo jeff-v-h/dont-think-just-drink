@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList } from 'react-native';
+import { View, SafeAreaView, FlatList, Alert } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
@@ -30,19 +30,29 @@ class DeckListScreen extends React.Component {
   }
 
   loadCustomDecks = async () => {
-    const deckList = await StorageService.getDeckList();
+    try {
+      const deckList = await StorageService.getDeckList();
 
-    if (!deckList || deckList.length === 0) {
-      const newDecks = [standardDeck, asianDeck];
-      await this.saveInitialDecks(newDecks);
-      this.setState({ decks: newDecks });
-      return;
+      if (!deckList || deckList.length === 0) {
+        const newDecks = [standardDeck, asianDeck];
+        await this.saveInitialDecks(newDecks);
+        this.setState({ decks: newDecks });
+        return;
+      }
+
+      this.setState({ decks: deckList });
+    } catch (e) {
+      Alert.alert('s', e.message);
     }
-
-    this.setState({ decks: deckList });
   };
 
-  saveInitialDecks = async (decks) => await StorageService.saveNewDecks(decks);
+  saveInitialDecks = async (decks) => {
+    try {
+      await StorageService.saveNewDecks(decks);
+    } catch (e) {
+      Alert.alert('s', e.message);
+    }
+  };
 
   navigateToDeck = (deck) => () => {
     this.props.navigation.navigate('Deck', {
