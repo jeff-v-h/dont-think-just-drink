@@ -2,22 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import uuid from 'uuid';
 
+const errorTitle = 'Error';
+
 const saveData = async (storageKey, value) => {
-  try {
-    const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
-    await AsyncStorage.setItem(storageKey, stringValue);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to save to phone storage.');
-  }
+  const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
+  await AsyncStorage.setItem(storageKey, stringValue);
 };
 
 const getData = async (storageKey) => {
-  try {
-    const jsonValue = await AsyncStorage.getItem(storageKey);
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to get data from phone storage.');
-  }
+  const jsonValue = await AsyncStorage.getItem(storageKey);
+  return jsonValue != null ? JSON.parse(jsonValue) : null;
 };
 
 const clearAllData = async () => {
@@ -26,134 +20,95 @@ const clearAllData = async () => {
 };
 
 const saveDeckList = async (deckList) => {
-  try {
-    await saveData('deckList', deckList);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to store deck list');
-  }
+  await saveData('deckList', deckList);
 };
 
 const getDeckList = async () => {
-  try {
-    return await getData('deckList');
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to get deck list');
-  }
+  return await getData('deckList');
 };
 
 const clearDeckList = async () => {
-  try {
-    await saveData('deckList', []);
-    console.log('deck list cleared');
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to clear deck list');
-  }
+  await saveData('deckList', []);
+  console.log('deck list cleared');
 };
 
 const saveDeck = async (deck) => {
-  try {
-    await saveData(`deck:${deck.id}`, deck);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to save deck');
-  }
+  await saveData(`deck:${deck.id}`, deck);
 };
 
 const getDeck = async (deckId) => {
-  try {
-    return await getData(`deck:${deckId}`);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to get deck');
-  }
+  return await getData(`deck:${deckId}`);
 };
 
 const updateDeckName = async (deck) => {
-  try {
-    const deckList = await getDeckList();
-    const deckIndex = deckList.findIndex((d) => d.id === deck.id);
+  const deckList = await getDeckList();
 
-    if (deckIndex === -1) {
-      throw new Error('Deck could not be found in list');
-    }
-
-    deckList[deckIndex].name = deck.name;
-
-    saveDeckList(deckList);
-    saveDeck(deck);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to save deck name');
+  if (deckList.some((d) => d.name.toLowerCase() === deck.name.toLowerCase() && d.id !== deck.id)) {
+    throw new Error('Deck name already exists');
   }
+
+  const deckIndex = deckList.findIndex((d) => d.id === deck.id);
+
+  if (deckIndex === -1) {
+    throw new Error('Deck could not be found');
+  }
+
+  deckList[deckIndex].name = deck.name;
+
+  saveDeckList(deckList);
+  saveDeck(deck);
 };
 
 const saveNewDeck = async (newDeck) => {
-  try {
-    const deckList = (await getDeckList()) ?? [];
+  const deckList = (await getDeckList()) ?? [];
 
+  if (!newDeck.id) {
+    newDeck.id = uuid.v1();
+  }
+
+  const { cards, ...newDeckReference } = newDeck;
+  deckList.push(newDeckReference);
+
+  await Promise.all([saveDeckList(deckList), saveDeck(newDeck)]);
+
+  return newDeck.id;
+};
+
+const saveNewDecks = async (newDecks) => {
+  const deckList = (await getDeckList()) ?? [];
+  const promises = [];
+
+  newDecks.forEach((newDeck) => {
     if (!newDeck.id) {
       newDeck.id = uuid.v1();
     }
 
     const { cards, ...newDeckReference } = newDeck;
+
     deckList.push(newDeckReference);
+    promises.push(saveDeck(newDeck));
+  });
 
-    await Promise.all([saveDeckList(deckList), saveDeck(newDeck)]);
+  promises.push(saveDeckList(deckList));
 
-    return newDeck.id;
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to save new deck');
-  }
-};
-
-const saveNewDecks = async (newDecks) => {
-  try {
-    const deckList = (await getDeckList()) ?? [];
-    const promises = [];
-
-    newDecks.forEach((newDeck) => {
-      if (!newDeck.id) {
-        newDeck.id = uuid.v1();
-      }
-
-      const { cards, ...newDeckReference } = newDeck;
-
-      deckList.push(newDeckReference);
-      promises.push(saveDeck(newDeck));
-    });
-
-    promises.push(saveDeckList(deckList));
-
-    await Promise.all(promises);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to save new decks');
-  }
+  await Promise.all(promises);
 };
 
 const saveCard = async (deckId, cardIndex, cardText) => {
-  try {
-    const deck = await getDeck(deckId);
-    if (!deck) {
-      throw new Error('unable to save card because deck does not exist');
-    }
-    deck.cards[cardIndex] = cardText;
-    await saveDeck(deck);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to save card');
+  const deck = await getDeck(deckId);
+  if (!deck) {
+    throw new Error('unable to save card because deck does not exist');
   }
+  deck.cards[cardIndex] = cardText;
+  await saveDeck(deck);
 };
 
 const saveMostRecentGame = async (gameState) => {
-  try {
-    await saveData('most-recent-game', gameState);
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to auto save');
-  }
+  await saveData('most-recent-game', gameState);
 };
 
 const getMostRecentGame = async () => {
-  try {
-    return await getData('most-recent-game');
-  } catch (e) {
-    Alert.alert('Storage Error', 'Unable to get most recent game');
-  }
+  return await getData('most-recent-game');
 };
 
 const StorageService = {
