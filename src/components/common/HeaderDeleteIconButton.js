@@ -1,32 +1,39 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Alert, View } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import IconButton from '../common/IconButton';
+import styles from '../../styles/styles';
+import StorageService from '../../services/storageService';
 
-HeaderDeleteIconButton.propTypes = {
-  onPress: PropTypes.func,
-  buttonStyles: PropTypes.array,
-  opacity: PropTypes.number,
-  iconName: PropTypes.string,
-  size: PropTypes.number,
-  iconStyles: PropTypes.array
+const propTypes = {
+  deckId: PropTypes.string.isRequired,
+  navigate: PropTypes.func.isRequired
 };
 
-HeaderDeleteIconButton.defaultProps = {
-  onPress: () => {},
-  buttonStyles: [],
-  opacity: 0.7,
-  iconName: 'plus',
-  size: 18,
-  iconStyles: []
-};
+const HeaderDeleteIconButton = ({ deckId, navigate }) => {
+  const confirmDelete = () => {
+    Alert.alert('Confirm Delete', 'Are you sure you want to permanently remove this deck from your device?', [
+      {
+        text: 'Cancel',
+        style: 'cancel'
+      },
+      {
+        text: 'Delete',
+        onPress: async () => {
+          await StorageService.deleteDeck(deckId);
+          navigate('DeckList', { reloadDeckList: true });
+        }
+      }
+    ]);
+  };
 
-function HeaderDeleteIconButton({ onPress, buttonStyles, opacity, iconName, size, iconStyles }) {
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyles} activeOpacity={opacity}>
-      <Icon name={iconName} size={size} style={iconStyles} />
-    </TouchableOpacity>
+    <View style={styles.headerDeleteButtonWrapper}>
+      <IconButton onPress={confirmDelete} iconName="trash-o" size={26} opacity={0.5} />
+    </View>
   );
-}
+};
+
+HeaderDeleteIconButton.propTypes = propTypes;
 
 export default HeaderDeleteIconButton;

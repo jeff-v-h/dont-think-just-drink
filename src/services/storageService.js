@@ -11,6 +11,10 @@ const getData = async (storageKey) => {
   return jsonValue != null ? JSON.parse(jsonValue) : null;
 };
 
+const deleteData = async (storageKey) => {
+  await AsyncStorage.removeItem(storageKey);
+};
+
 const clearAllData = async () => {
   await AsyncStorage.clear();
   console.log('all cleared');
@@ -37,6 +41,13 @@ const getDeck = async (deckId) => {
   return await getData(`deck:${deckId}`);
 };
 
+const deleteDeck = async (deckId) => {
+  const deckList = await getDeckList();
+  const newDeckList = deckList.filter((d) => d.id !== deckId);
+
+  await Promise.all(saveDeckList(newDeckList), deleteData(`deck:${deckId}`));
+};
+
 const updateDeckName = async (deck) => {
   const deckList = await getDeckList();
 
@@ -52,8 +63,7 @@ const updateDeckName = async (deck) => {
 
   deckList[deckIndex].name = deck.name;
 
-  saveDeckList(deckList);
-  saveDeck(deck);
+  await Promise.all([saveDeckList(deckList), saveDeck(deck)]);
 };
 
 const saveNewDeck = async (newDeck) => {
@@ -118,6 +128,7 @@ const StorageService = {
   clearDeckList,
   saveNewDeck,
   saveNewDecks,
+  deleteDeck,
   saveCard,
   saveMostRecentGame,
   getMostRecentGame

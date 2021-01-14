@@ -37,10 +37,14 @@ class DeckScreen extends React.Component {
     try {
       const { deckId } = this.props.route.params;
       const deck = deckId ? await StorageService.getDeck(deckId) : await this.createNewDeck();
+
       this.setState({ deck, originalDeckName: deck.name });
-      if (!deckId) {
-        this.props.navigation.setParams({ reloadDeckList: true });
-      }
+
+      const params = {
+        deckId: deck.id,
+        reloadDeckList: !deckId
+      };
+      this.props.navigation.setParams(params);
     } catch (e) {
       Alert.alert(ERROR_TITLE, e.message);
     }
