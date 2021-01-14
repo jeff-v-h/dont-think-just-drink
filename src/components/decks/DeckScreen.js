@@ -45,8 +45,9 @@ class DeckScreen extends React.Component {
 
   createNewDeck = async () => {
     try {
+      const deckList = await StorageService.getDeckList();
       const newDeck = {
-        name: 'My New Deck',
+        name: this.getAvailableDeckName(deckList),
         cards: [],
         type: GameTypesEnum.custom
       };
@@ -55,6 +56,16 @@ class DeckScreen extends React.Component {
     } catch (e) {
       Alert.alert(ERROR_TITLE, e.message);
     }
+  };
+
+  getAvailableDeckName = (deckList) => {
+    let name = 'My New Deck';
+    let count = 0;
+    while (deckList.findIndex((d) => d.name === name) > -1) {
+      count++;
+      name = 'My New Deck ' + count;
+    }
+    return name;
   };
 
   onChangeDeckName = (text) =>
