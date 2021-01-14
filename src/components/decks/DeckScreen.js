@@ -3,7 +3,7 @@ import { View, SafeAreaView, FlatList, TextInput, Alert } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
-import FloatingActionButton from '../common/FloatingActionButton';
+import IconButton from '../common/IconButton';
 import StorageService from '../../services/storageService';
 import { GameTypesEnum } from '../../utils/enums';
 import AppButton from '../common/AppButton';
@@ -128,9 +128,9 @@ class DeckScreen extends React.Component {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
-        <FloatingActionButton
+        <IconButton
           onPress={() => this.navigateToCard()}
-          buttonStyles={[styles.floatingActionButton]}
+          buttonStyles={[styles.IconButton]}
           iconStyles={[styles.floatingActionIcon]}
         />
       </SafeAreaView>

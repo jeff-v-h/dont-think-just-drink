@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -9,6 +10,8 @@ import DeckListScreen from '../components/decks/DeckListScreen';
 import DeckScreen from '../components/decks/DeckScreen';
 import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 import { HeaderBackButton } from '@react-navigation/stack';
+import IconButton from '../components/common/IconButton';
+import styles from '../styles/styles';
 
 const Drawer = createDrawerNavigator();
 const GameStack = createStackNavigator();
@@ -44,6 +47,11 @@ const DecksNavigationStack = () => (
               })
             }
           />
+        ),
+        headerRight: (props) => (
+          <View style={styles.headerDeleteButtonWrapper}>
+            <IconButton onPress={() => console.log('delete')} iconName="trash-o" size={26} opacity={0.5} />
+          </View>
         )
       })}
     />

@@ -6,7 +6,7 @@ import ListLinkRow from '../common/ListLinkRow';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
 import StorageService from '../../services/storageService';
-import FloatingActionButton from '../common/FloatingActionButton';
+import IconButton from '../common/IconButton';
 import { ERROR_TITLE } from '../../utils/constants';
 
 class DeckListScreen extends React.Component {
@@ -75,9 +75,9 @@ class DeckListScreen extends React.Component {
             keyExtractor={(item) => item.name}
           />
         </View>
-        <FloatingActionButton
+        <IconButton
           onPress={this.navigateToDeck()}
-          buttonStyles={[styles.floatingActionButton]}
+          buttonStyles={[styles.IconButton]}
           iconStyles={[styles.floatingActionIcon]}
         />
       </SafeAreaView>

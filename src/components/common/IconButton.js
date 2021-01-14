@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-FloatingActionButton.propTypes = {
+IconButton.propTypes = {
   onPress: PropTypes.func,
   buttonStyles: PropTypes.array,
   opacity: PropTypes.number,
@@ -12,7 +12,7 @@ FloatingActionButton.propTypes = {
   iconStyles: PropTypes.array
 };
 
-FloatingActionButton.defaultProps = {
+IconButton.defaultProps = {
   onPress: () => {},
   buttonStyles: [],
   opacity: 0.7,
@@ -21,7 +21,7 @@ FloatingActionButton.defaultProps = {
   iconStyles: []
 };
 
-function FloatingActionButton({ onPress, buttonStyles, opacity, iconName, size, iconStyles }) {
+function IconButton({ onPress, buttonStyles, opacity, iconName, size, iconStyles }) {
   return (
     <TouchableOpacity onPress={onPress} style={buttonStyles} activeOpacity={opacity}>
       <Icon name={iconName} size={size} style={iconStyles} />
@@ -29,4 +29,4 @@ function FloatingActionButton({ onPress, buttonStyles, opacity, iconName, size, 
   );
 }
 
-export default FloatingActionButton;
+export default IconButton;

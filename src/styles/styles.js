@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: moderateScale(20)
   },
-  floatingActionButton: {
+  IconButton: {
     position: 'absolute',
     width: 60,
     height: 60,
@@ -92,7 +92,15 @@ const styles = StyleSheet.create({
   },
   floatingActionIcon: {
     color: colours.white
+  },
+  headerDeleteButtonWrapper: {
+    justifyContent: 'center',
+    flex: 1,
+    paddingRight: moderateScale(14)
   }
 });
+
+// borderWidth: 1,
+// borderColor: 'red'
 
 export default styles;
