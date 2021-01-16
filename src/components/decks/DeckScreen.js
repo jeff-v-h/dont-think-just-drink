@@ -97,7 +97,7 @@ class DeckScreen extends React.Component {
     const { deck } = this.state;
     this.props.navigation.navigate('ConfigureCards', {
       deckId: deck.id,
-      cardIndex: cardIndex ?? deck.cards.length,
+      cardIndex,
       cards: deck.cards
     });
   };

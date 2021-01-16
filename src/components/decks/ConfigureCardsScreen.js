@@ -84,7 +84,7 @@ class ConfigureCardsScreen extends React.Component {
 
       this.setState({ originalCardText: cardText, cards });
       this.animateSuccess();
-      this.props.navigation.setParams({ reloadDeck: true });
+      this.props.navigation.setParams({ reloadDeck: true, cardIndex, cards });
     } catch (e) {
       Alert.alert(ERROR_TITLE, e.message);
     }

@@ -66,8 +66,10 @@ const DecksNavigationStack = () => (
           />
         ),
         headerRight: () => {
-          const { deckId, cardIndex } = route.params;
-          return <HeaderDeleteCardButton deckId={deckId} cardIndex={cardIndex} navigate={navigation.navigate} />;
+          const { deckId, cardIndex, cards } = route.params;
+          return cardIndex < cards.length ? (
+            <HeaderDeleteCardButton deckId={deckId} cardIndex={cardIndex} navigate={navigation.navigate} />
+          ) : null;
         }
       })}
     />
