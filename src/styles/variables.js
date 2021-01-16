@@ -1,6 +1,11 @@
+const coral = '#FF7F50';
+
 export const colours = {
-  coral: '#FF7F50',
+  primary: coral,
+  coral,
   white: '#fff',
   grey: '#a6a6a6',
+  lightgrey: '#D3D3D3',
+  silver: '#C0C0C0',
   black: '#000'
 };

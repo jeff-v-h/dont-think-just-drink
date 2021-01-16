@@ -8,6 +8,7 @@ import StorageService from '../../services/storageService';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
 import { ERROR_TITLE } from '../../utils/constants';
+import gameStyles from '../../styles/gameStyles';
 
 class HomeScreen extends React.Component {
   state = {
@@ -56,9 +57,14 @@ class HomeScreen extends React.Component {
           <HeaderText>Don't Think</HeaderText>
           <HeaderText>Just Drink</HeaderText>
         </View>
-        <View>
-          <Text>Game Deck:</Text>
-          <AppButton title={selectedDeckName} onPress={() => console.log('test')} />
+        <View style={gameStyles.selectDeckView}>
+          <Text style={styles.text}>Game Deck:</Text>
+          <AppButton
+            title={selectedDeckName}
+            onPress={() => console.log('test')}
+            style={gameStyles.selectDeckButton}
+            textStyle={gameStyles.selectDeckText}
+          />
         </View>
         <View style={styles.section}>
           <AppButton
