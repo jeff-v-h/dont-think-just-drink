@@ -128,7 +128,7 @@ class DeckScreen extends React.Component {
                 onPress={this.getNavigationToCardFunction(index)}
                 text={item}
                 numberOfLines={2}
-                otherStyles={[deckStyles.listRow]}
+                buttonStyle={deckStyles.listRow}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

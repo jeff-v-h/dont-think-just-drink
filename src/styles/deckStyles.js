@@ -6,6 +6,13 @@ const deckStyles = StyleSheet.create({
   listRow: {
     height: verticalScale(50)
   },
+  editDeck: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: moderateScale(10),
+    paddingLeft: moderateScale(13)
+  },
   configCardInput: {
     paddingLeft: moderateScale(20),
     paddingRight: moderateScale(20),

@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   itemText: {
-    fontSize: moderateScale(20)
+    fontSize: moderateScale(20),
+    flex: 1
   },
   IconButton: {
     position: 'absolute',

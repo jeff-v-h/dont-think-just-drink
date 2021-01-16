@@ -2,22 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableHighlight, Text } from 'react-native';
 import styles from '../../styles/styles';
+import { createStylesArray } from '../../utils/helpers';
 
 ListLinkRow.propTypes = {
   onPress: PropTypes.func,
   text: PropTypes.string,
-  otherStyles: PropTypes.array,
-  numberOfLines: PropTypes.number
+  buttonStyle: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  numberOfLines: PropTypes.number,
+  children: PropTypes.node
 };
 
 ListLinkRow.defaultProps = {
   onPress: () => {},
-  otherStyles: [],
-  numberOfLines: 1
+  otherStyle: [],
+  numberOfLines: 1,
+  children: null
 };
 
-function ListLinkRow({ onPress, text, numberOfLines, otherStyles }) {
-  const allStyles = otherStyles.length > 0 ? [styles.touchableView, ...otherStyles] : styles.touchableView;
+function ListLinkRow({ onPress, text, numberOfLines, buttonStyle, children }) {
+  const allStyles = createStylesArray(styles.touchableView, buttonStyle);
 
   return (
     <TouchableHighlight style={styles.touchable} onPress={onPress}>
@@ -25,6 +28,7 @@ function ListLinkRow({ onPress, text, numberOfLines, otherStyles }) {
         <Text style={styles.itemText} numberOfLines={numberOfLines}>
           {text}
         </Text>
+        {children}
       </View>
     </TouchableHighlight>
   );

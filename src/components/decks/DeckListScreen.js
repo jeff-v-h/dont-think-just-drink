@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, Alert } from 'react-native';
+import { View, SafeAreaView, FlatList, Alert, Text } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
@@ -14,7 +14,8 @@ class DeckListScreen extends React.Component {
     super(props);
 
     this.state = {
-      decks: []
+      decks: [],
+      selectedDeckId: ''
     };
   }
 
@@ -55,6 +56,10 @@ class DeckListScreen extends React.Component {
     }
   };
 
+  selectDeck = () => {
+    console.log('select deck');
+  };
+
   navigateToDeck = (deck) => () => {
     this.props.navigation.navigate('Deck', {
       deckId: deck?.id ?? ''
@@ -70,7 +75,14 @@ class DeckListScreen extends React.Component {
           <FlatList
             data={decks}
             renderItem={({ item }) => (
-              <ListLinkRow onPress={this.navigateToDeck(item)} text={item.name} otherStyles={[deckStyles.listRow]} />
+              <ListLinkRow onPress={this.selectDeck} text={item.name} buttonStyle={deckStyles.listRow}>
+                <IconButton
+                  iconName="edit"
+                  onPress={this.navigateToDeck(item)}
+                  size={24}
+                  buttonStyle={deckStyles.editDeck}
+                />
+              </ListLinkRow>
             )}
             keyExtractor={(item) => item.name}
           />

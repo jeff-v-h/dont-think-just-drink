@@ -45,6 +45,8 @@ class HomeScreen extends React.Component {
     }
   };
 
+  goToDeckSelection = () => this.props.navigation.navigate('Decks', { screen: 'DeckList' });
+
   render() {
     const { selectedDeckId, selectedDeckName } = this.state;
 
@@ -61,7 +63,7 @@ class HomeScreen extends React.Component {
           <Text style={styles.text}>Game Deck:</Text>
           <AppButton
             title={selectedDeckName}
-            onPress={() => console.log('test')}
+            onPress={this.goToDeckSelection}
             style={gameStyles.selectDeckButton}
             textStyle={gameStyles.selectDeckText}
           />
