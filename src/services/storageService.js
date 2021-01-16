@@ -101,13 +101,23 @@ const saveNewDecks = async (newDecks) => {
   await Promise.all(promises);
 };
 
-const saveCard = async (deckId, cardIndex, cardText) => {
+const saveCard = async (deckId, cardText, cardIndex) => {
   const deck = await getDeck(deckId);
   if (!deck) {
-    throw new Error('unable to save card because deck does not exist');
+    throw new Error('Unable to save card because deck does not exist');
   }
-  deck.cards[cardIndex] = cardText;
+
+  if (cardIndex) {
+    deck.cards[cardIndex] = cardText;
+  } else {
+    deck.cards.push(cardText);
+  }
+
   await saveDeck(deck);
+};
+
+const saveNewCard = async (deckId, cardText) => {
+  await saveCard(deckId, cardText);
 };
 
 const saveMostRecentGame = async (gameState) => {
@@ -130,6 +140,7 @@ const StorageService = {
   saveNewDecks,
   deleteDeck,
   saveCard,
+  saveNewCard,
   saveMostRecentGame,
   getMostRecentGame
 };

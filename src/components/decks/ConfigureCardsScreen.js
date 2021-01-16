@@ -58,9 +58,10 @@ class ConfigureCardsScreen extends React.Component {
 
   goNextCard = () => {
     const { cards, cardIndex } = this.state;
+    const nextCardIndex = cardIndex + 1;
     this.props.navigation.navigate('ConfigureCards', {
-      cardIndex: cardIndex + 1,
-      cardText: cards[cardIndex + 1],
+      cardIndex: nextCardIndex,
+      cardText: nextCardIndex < cards.length ? cards[cardIndex + 1] : '',
       reloadCard: true
     });
   };
@@ -72,9 +73,16 @@ class ConfigureCardsScreen extends React.Component {
 
   saveCard = async () => {
     try {
-      const { deckId, cardIndex, cardText } = this.state;
-      await StorageService.saveCard(deckId, cardIndex, cardText);
-      this.setState({ originalCardText: cardText });
+      const { deckId, cardIndex, cardText, cards } = this.state;
+
+      if (cardIndex === cards.length) {
+        await StorageService.saveNewCard(deckId, cardText);
+        cards.push(cardText);
+      } else {
+        await StorageService.saveCard(deckId, cardText, cardIndex);
+      }
+
+      this.setState({ originalCardText: cardText, cards });
       this.animateSuccess();
       this.props.navigation.setParams({ reloadDeck: true });
     } catch (e) {
@@ -131,7 +139,7 @@ class ConfigureCardsScreen extends React.Component {
           />
           <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
             <AppButton title="<" onPress={this.goPreviousCard} disabled={cardIndex === 0} />
-            <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length - 1} />
+            <AppButton title=">" onPress={this.goNextCard} disabled={cardIndex === cards.length} />
           </View>
           <View style={[styles.buttonsRow, deckStyles.configButtonsRow]}>
             <AppButton title="Reset" onPress={this.resetCardText} disabled={cardText === originalCardText} />
