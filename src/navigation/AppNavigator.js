@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -10,8 +9,8 @@ import DeckListScreen from '../components/decks/DeckListScreen';
 import DeckScreen from '../components/decks/DeckScreen';
 import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 import { HeaderBackButton } from '@react-navigation/stack';
-import HeaderDeleteIconButton from '../components/common/HeaderDeleteIconButton';
-import styles from '../styles/styles';
+import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
+import HeaderDeleteCardButton from '../components/decks/HeaderDeleteCardButton';
 
 const Drawer = createDrawerNavigator();
 const GameStack = createStackNavigator();
@@ -48,7 +47,7 @@ const DecksNavigationStack = () => (
             }
           />
         ),
-        headerRight: () => <HeaderDeleteIconButton deckId={route.params.deckId} navigate={navigation.navigate} />
+        headerRight: () => <HeaderDeleteDeckButton deckId={route.params.deckId} navigate={navigation.navigate} />
       })}
     />
     <DecksStack.Screen
@@ -65,7 +64,11 @@ const DecksNavigationStack = () => (
               })
             }
           />
-        )
+        ),
+        headerRight: () => {
+          const { deckId, cardIndex } = route.params;
+          return <HeaderDeleteCardButton deckId={deckId} cardIndex={cardIndex} navigate={navigation.navigate} />;
+        }
       })}
     />
   </DecksStack.Navigator>

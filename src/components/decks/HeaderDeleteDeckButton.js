@@ -10,7 +10,7 @@ const propTypes = {
   navigate: PropTypes.func.isRequired
 };
 
-const HeaderDeleteIconButton = ({ deckId, navigate }) => {
+const HeaderDeleteDeckButton = ({ deckId, navigate }) => {
   const confirmDelete = () => {
     Alert.alert('Confirm Delete', 'Are you sure you want to permanently remove this deck from your device?', [
       {
@@ -34,6 +34,6 @@ const HeaderDeleteIconButton = ({ deckId, navigate }) => {
   );
 };
 
-HeaderDeleteIconButton.propTypes = propTypes;
+HeaderDeleteDeckButton.propTypes = propTypes;
 
-export default HeaderDeleteIconButton;
+export default HeaderDeleteDeckButton;

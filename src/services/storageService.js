@@ -120,6 +120,20 @@ const saveNewCard = async (deckId, cardText) => {
   await saveCard(deckId, cardText);
 };
 
+const deleteCard = async (deckId, cardIndex) => {
+  const deck = await getDeck(deckId);
+
+  if (!deck) {
+    throw new Error('Unable to delete card because deck does not exist');
+  }
+  if (cardIndex < 0 || cardIndex >= deck.cards.length) {
+    throw new Error(`Card with index ${cardIndex} does not exist in deck`);
+  }
+
+  deck.cards.splice(cardIndex, 1);
+  await saveDeck(deck);
+};
+
 const saveMostRecentGame = async (gameState) => {
   await saveData('most-recent-game', gameState);
 };
@@ -141,6 +155,7 @@ const StorageService = {
   deleteDeck,
   saveCard,
   saveNewCard,
+  deleteCard,
   saveMostRecentGame,
   getMostRecentGame
 };
