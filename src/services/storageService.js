@@ -6,8 +6,10 @@ const saveData = async (storageKey, value) => {
   await AsyncStorage.setItem(storageKey, stringValue);
 };
 
+const getStringData = async (storageKey) => await AsyncStorage.getItem(storageKey);
+
 const getData = async (storageKey) => {
-  const jsonValue = await AsyncStorage.getItem(storageKey);
+  const jsonValue = await getStringData(storageKey);
   return jsonValue != null ? JSON.parse(jsonValue) : null;
 };
 
@@ -142,6 +144,12 @@ const getMostRecentGame = async () => {
   return await getData('most-recent-game');
 };
 
+const saveSelectedDeckId = async (deckId) => await saveData('selected-deck', deckId);
+const getSelectedDeck = async () => {
+  const deckId = await getStringData('selected-deck');
+  return await getDeck(deckId);
+};
+
 const StorageService = {
   clearAllData,
   saveDeck,
@@ -157,7 +165,9 @@ const StorageService = {
   saveNewCard,
   deleteCard,
   saveMostRecentGame,
-  getMostRecentGame
+  getMostRecentGame,
+  saveSelectedDeckId,
+  getSelectedDeck
 };
 
 export default StorageService;
