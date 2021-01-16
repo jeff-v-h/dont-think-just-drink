@@ -90,7 +90,7 @@ class GameScreen extends React.Component {
         </View>
         <View style={[styles.section, styles.buttonsRow]}>
           {cardIndexToShow > 0 && (
-            <AppButton title="Previous" onPress={() => this.seePreviousCard()} style={styles.button} />
+            <AppButton title="Previous" onPress={() => this.seePreviousCard()} styles={styles.button} />
           )}
           {cardIndexToShow < played.length - 1 && (
             <AppButton title="Back to most recent" onPress={() => this.seeCurrentCard()} style={styles.button} />

@@ -77,8 +77,8 @@ class DeckListScreen extends React.Component {
         </View>
         <IconButton
           onPress={this.navigateToDeck()}
-          buttonStyles={[styles.IconButton]}
-          iconStyles={[styles.floatingActionIcon]}
+          buttonStyle={styles.IconButton}
+          iconStyle={styles.floatingActionIcon}
         />
       </SafeAreaView>
     );

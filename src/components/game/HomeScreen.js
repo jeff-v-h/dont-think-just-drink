@@ -57,7 +57,8 @@ class HomeScreen extends React.Component {
           <HeaderText>Just Drink</HeaderText>
         </View>
         <View>
-          <Text>Game Deck: {selectedDeckName}</Text>
+          <Text>Game Deck:</Text>
+          <AppButton title={selectedDeckName} onPress={() => console.log('test')} />
         </View>
         <View style={styles.section}>
           <AppButton

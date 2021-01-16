@@ -2,29 +2,30 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { createStylesArray } from '../../utils/helpers';
 
 IconButton.propTypes = {
   onPress: PropTypes.func,
-  buttonStyles: PropTypes.array,
+  buttonStyle: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   opacity: PropTypes.number,
   iconName: PropTypes.string,
   size: PropTypes.number,
-  iconStyles: PropTypes.array
+  iconStyle: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 
 IconButton.defaultProps = {
   onPress: () => {},
-  buttonStyles: [],
+  buttonStyle: [],
   opacity: 0.7,
   iconName: 'plus',
   size: 18,
-  iconStyles: []
+  iconStyle: []
 };
 
-function IconButton({ onPress, buttonStyles, opacity, iconName, size, iconStyles }) {
+function IconButton({ onPress, buttonStyle, opacity, iconName, size, iconStyle }) {
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyles} activeOpacity={opacity}>
-      <Icon name={iconName} size={size} style={iconStyles} />
+    <TouchableOpacity onPress={onPress} style={createStylesArray(buttonStyle)} activeOpacity={opacity}>
+      <Icon name={iconName} size={size} style={createStylesArray(iconStyle)} />
     </TouchableOpacity>
   );
 }

@@ -136,8 +136,8 @@ class DeckScreen extends React.Component {
         </View>
         <IconButton
           onPress={() => this.navigateToCard()}
-          buttonStyles={[styles.IconButton]}
-          iconStyles={[styles.floatingActionIcon]}
+          buttonStyle={styles.IconButton}
+          iconStyle={styles.floatingActionIcon}
         />
       </SafeAreaView>
     );
