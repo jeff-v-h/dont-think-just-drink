@@ -60,6 +60,13 @@ class DeckListScreen extends React.Component {
     if (this.state.selectedDeckId != id) {
       await StorageService.saveSelectedDeckId(id);
       this.setState({ selectedDeckId: id });
+
+      const selectedDeck = this.state.decks.find((d) => d.id === id);
+      this.props.navigation.setParams({
+        reloadSelection: true,
+        selectedDeckId: id,
+        selectedDeckName: selectedDeck.name
+      });
     }
   };
 

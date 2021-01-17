@@ -20,6 +20,15 @@ class HomeScreen extends React.Component {
     this.loadSelectedDeck();
   }
 
+  componentDidUpdate() {
+    const { route, navigation } = this.props;
+    if (route.params?.reloadSelection) {
+      const { selectedDeckId, selectedDeckName } = route.params;
+      navigation.setParams({ reloadSelection: false });
+      this.setState({ selectedDeckId, selectedDeckName });
+    }
+  }
+
   loadSelectedDeck = async () => {
     try {
       let selectedDeck = await StorageService.getSelectedDeck();

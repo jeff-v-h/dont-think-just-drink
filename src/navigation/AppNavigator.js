@@ -20,7 +20,25 @@ const RulesStack = createStackNavigator();
 const DecksConfigNavigationStack = () => (
   <DecksConfigStack.Navigator initialRouteName="Home">
     <DecksConfigStack.Screen name="Home" component={HomeScreen} />
-    <DecksConfigStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
+    <DecksConfigStack.Screen
+      name="DeckList"
+      component={DeckListScreen}
+      options={({ navigation, route }) => ({
+        title: 'Decks',
+        headerLeft: (props) => (
+          <HeaderBackButton
+            {...props}
+            onPress={() =>
+              navigation.navigate('Home', {
+                reloadSelection: route.params.reloadSelection,
+                selectedDeckId: route.params.selectedDeckId,
+                selectedDeckName: route.params.selectedDeckName
+              })
+            }
+          />
+        )
+      })}
+    />
     <DecksConfigStack.Screen
       name="Deck"
       component={DeckScreen}
