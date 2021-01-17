@@ -45,7 +45,13 @@ class HomeScreen extends React.Component {
     }
   };
 
-  goToDeckSelection = () => this.props.navigation.navigate('Decks', { screen: 'DeckList' });
+  goToDeckSelection = () => {
+    const { selectedDeckId, selectedDeckName } = this.state;
+    this.props.navigation.navigate('Decks', {
+      screen: 'DeckList',
+      params: { selectedDeckId, selectedDeckName }
+    });
+  };
 
   render() {
     const { selectedDeckId, selectedDeckName } = this.state;

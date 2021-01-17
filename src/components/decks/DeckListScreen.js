@@ -15,7 +15,7 @@ class DeckListScreen extends React.Component {
 
     this.state = {
       decks: [],
-      selectedDeckId: ''
+      selectedDeckId: props.route.params?.selectedDeckId ?? ''
     };
   }
 
@@ -38,7 +38,7 @@ class DeckListScreen extends React.Component {
       if (!deckList || deckList.length === 0) {
         const newDecks = [standardDeck, asianDeck];
         await this.saveInitialDecks(newDecks);
-        this.setState({ decks: newDecks });
+        this.setState({ decks: newDecks, selectedDeckId: newDecks[0].id });
         return;
       }
 
