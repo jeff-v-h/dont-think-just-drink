@@ -5,6 +5,7 @@ import AppText from '../common/AppText';
 import AppButton from '../common/AppButton';
 import StorageService from '../../services/storageService';
 import uuid from 'uuid';
+import gameStyles from '../../styles/gameStyles';
 
 class GameScreen extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class GameScreen extends React.Component {
 
   getInitialState = () => ({
     played: [],
-    deckCards: [],
+    cardPile: [],
     cardIndexToShow: -1,
     gameId: uuid.v1()
   });
@@ -33,18 +34,18 @@ class GameScreen extends React.Component {
   setupGame = async () => {
     const { route, navigation } = this.props;
     navigation.setParams({ newGame: false });
-    console.log('setup');
+
     const deck = await StorageService.getDeck(route.params.deckId);
-    this.setState({ ...this.getInitialState(), deckCards: deck.cards }, this.playNewCard);
+    this.setState({ ...this.getInitialState(), cardPile: deck.cards }, this.playNewCard);
   };
 
   // min and max included as possible outcomes
   randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
   getRandomCard = () => {
-    const { deckCards } = this.state;
+    const { cardPile: cardPile } = this.state;
     const randomNum = this.randomIntFromInterval(0, deck.length - 1);
-    return deckCards[randomNum];
+    return cardPile[randomNum];
   };
 
   playNextCard = () => {
@@ -59,14 +60,14 @@ class GameScreen extends React.Component {
   };
 
   playNewCard = () => {
-    const { played, deckCards, cardIndexToShow } = this.state;
-    const randomIndex = this.randomIntFromInterval(0, deckCards.length - 1);
-    played.push(deckCards[randomIndex]);
-    deckCards.splice(randomIndex, 1);
+    const { played, cardPile: cardPile, cardIndexToShow } = this.state;
+    const randomIndex = this.randomIntFromInterval(0, cardPile.length - 1);
+    played.push(cardPile[randomIndex]);
+    cardPile.splice(randomIndex, 1);
     this.setState(
       {
         played,
-        deckCards,
+        cardPile,
         cardIndexToShow: cardIndexToShow + 1
       },
       () => this.saveAsMostRecent()
@@ -86,19 +87,23 @@ class GameScreen extends React.Component {
     }));
 
   render() {
-    const { played, cardIndexToShow, deckCards } = this.state;
+    const { played, cardIndexToShow, cardPile } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.section}>
+        <View style={[styles.section, gameStyles.cardTextSection]}>
           <AppText>{played[cardIndexToShow]}</AppText>
         </View>
-        <View style={[styles.section, styles.buttonsRow]}>
-          {cardIndexToShow > 0 && <AppButton title="<" onPress={() => this.seePreviousCard()} styles={styles.button} />}
-          {cardIndexToShow < played.length - 1 && (
-            <AppButton title="Most recent" onPress={() => this.seeCurrentCard()} style={styles.button} />
-          )}
-          {deckCards.length > 0 && <AppButton title=">" onPress={() => this.playNextCard()} style={styles.button} />}
+        <View style={[styles.section, gameStyles.cardButtonsSection]}>
+          <View style={styles.buttonsRow}>
+            <AppButton title="<" onPress={() => this.seePreviousCard()} disabled={cardIndexToShow === 0} />
+            <AppButton title=">" onPress={() => this.playNextCard()} disabled={cardPile.length === 0} />
+          </View>
+          <View style={[gameStyles.mostRecentButtonRow]}>
+            {cardIndexToShow < played.length - 1 && (
+              <AppButton title="Most recent" onPress={() => this.seeCurrentCard()} />
+            )}
+          </View>
         </View>
       </SafeAreaView>
     );
