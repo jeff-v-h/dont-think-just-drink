@@ -49,7 +49,7 @@ export const cardContentList = [
   'Players who currently have ChapStick with them, put those moisturised lips on your drink and take a smooth sip.',
   "If you've ever flown first class, put your pink up, and drink to being boujie.",
   'On the count of three, players point at the person most likely to order chicken fingers at a fancy restaurant. Whoever has the most fingers pointed at them drinks.',
-  'Which player most needs to be checked into anger management? The person witht he most votes drinks to CHILL THE FUCK OUT.',
+  'Which player most needs to be checked into anger management? The person with the most votes drinks to CHILL THE FUCK OUT.',
   'Drink if you actually purchased a fidget spinner in 2017.',
   'All players who have AirPods must drink. And consider sending a $1 Venmo to all the other peasants in the room.',
   "Drink if you've never watched Game of Thrones.",

@@ -3,7 +3,6 @@ import { View, SafeAreaView, Alert, Text } from 'react-native';
 import styles from '../../styles/styles';
 import HeaderText from '../common/HeaderText';
 import AppButton from '../common/AppButton';
-import { GameTypesEnum } from '../../utils/enums';
 import StorageService from '../../services/storageService';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
@@ -61,11 +60,12 @@ class HomeScreen extends React.Component {
 
   render() {
     const { selectedDeckId, selectedDeckName } = this.state;
+    const { navigation } = this.props;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.menuRow}>
-          <AppButton title="Menu" onPress={() => this.props.navigation.toggleDrawer()} />
+          <AppButton title="Menu" onPress={() => navigation.toggleDrawer()} />
         </View>
         <View style={styles.section}>
           <HeaderText>Don't Think</HeaderText>
@@ -85,7 +85,8 @@ class HomeScreen extends React.Component {
             title="Start Game"
             onPress={() =>
               navigation.navigate('Game', {
-                gameType: GameTypesEnum.normal
+                screen: 'Game',
+                params: { deckId: selectedDeckId }
               })
             }
             disabled={!selectedDeckId}
