@@ -47,10 +47,7 @@ class HomeScreen extends React.Component {
 
   goToDeckSelection = () => {
     const { selectedDeckId, selectedDeckName } = this.state;
-    this.props.navigation.navigate('Decks', {
-      screen: 'DeckList',
-      params: { selectedDeckId, selectedDeckName }
-    });
+    this.props.navigation.navigate('DeckList', { selectedDeckId, selectedDeckName });
   };
 
   render() {
@@ -66,7 +63,7 @@ class HomeScreen extends React.Component {
           <HeaderText>Just Drink</HeaderText>
         </View>
         <View style={gameStyles.selectDeckView}>
-          <Text style={styles.text}>Game Deck:</Text>
+          <Text style={styles.text}>Deck:</Text>
           <AppButton
             title={selectedDeckName}
             onPress={this.goToDeckSelection}
@@ -76,22 +73,13 @@ class HomeScreen extends React.Component {
         </View>
         <View style={styles.section}>
           <AppButton
-            title="Start Drinking"
+            title="Start Game"
             onPress={() =>
               navigation.navigate('Game', {
                 gameType: GameTypesEnum.normal
               })
             }
             disabled={!selectedDeckId}
-            style={styles.button}
-          />
-          <AppButton
-            title="Start Asian Version"
-            onPress={() =>
-              navigation.navigate('Game', {
-                gameType: GameTypesEnum.asian
-              })
-            }
             style={styles.button}
           />
         </View>

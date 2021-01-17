@@ -13,27 +13,15 @@ import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
 import HeaderDeleteCardButton from '../components/decks/HeaderDeleteCardButton';
 
 const Drawer = createDrawerNavigator();
+const ConfigStack = createStackNavigator();
 const GameStack = createStackNavigator();
 const RulesStack = createStackNavigator();
-const DecksStack = createStackNavigator();
 
-const GamesNavigationStack = () => (
-  <GameStack.Navigator initialRouteName="Home" options={{ title: "Don't Think, Just Drink" }}>
-    <GameStack.Screen name="Home" component={HomeScreen} />
-    <GameStack.Screen name="Game" component={GameScreen} />
-  </GameStack.Navigator>
-);
-
-const RulesNavigationStack = () => (
-  <RulesStack.Navigator initialRouteName="Rules">
-    <RulesStack.Screen name="Rules" component={RulesScreen} options={{ title: 'The Rules' }} />
-  </RulesStack.Navigator>
-);
-
-const DecksNavigationStack = () => (
-  <DecksStack.Navigator initialRouteName="DeckList">
-    <DecksStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
-    <DecksStack.Screen
+const ConfigNavigationStack = () => (
+  <ConfigStack.Navigator initialRouteName="Home">
+    <ConfigStack.Screen name="Home" component={HomeScreen} />
+    <ConfigStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
+    <ConfigStack.Screen
       name="Deck"
       component={DeckScreen}
       options={({ navigation, route }) => ({
@@ -50,7 +38,7 @@ const DecksNavigationStack = () => (
         headerRight: () => <HeaderDeleteDeckButton deckId={route.params.deckId} navigate={navigation.navigate} />
       })}
     />
-    <DecksStack.Screen
+    <ConfigStack.Screen
       name="ConfigureCards"
       component={ConfigureCardsScreen}
       options={({ navigation, route }) => ({
@@ -73,16 +61,28 @@ const DecksNavigationStack = () => (
         }
       })}
     />
-  </DecksStack.Navigator>
+  </ConfigStack.Navigator>
+);
+
+const GamesNavigationStack = () => (
+  <GameStack.Navigator initialRouteName="Game" options={{ title: "Don't Think, Just Drink" }}>
+    <GameStack.Screen name="Game" component={GameScreen} />
+  </GameStack.Navigator>
+);
+
+const RulesNavigationStack = () => (
+  <RulesStack.Navigator initialRouteName="Rules">
+    <RulesStack.Screen name="Rules" component={RulesScreen} options={{ title: 'The Rules' }} />
+  </RulesStack.Navigator>
 );
 
 function AppNavigator() {
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerPosition="right" drawerType="slide">
+        <Drawer.Screen name="Configuration" component={ConfigNavigationStack} />
         <Drawer.Screen name="Game" component={GamesNavigationStack} />
         <Drawer.Screen name="Rules" component={RulesNavigationStack} />
-        <Drawer.Screen name="Decks" component={DecksNavigationStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
