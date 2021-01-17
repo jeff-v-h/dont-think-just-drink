@@ -93,7 +93,7 @@ class ConfigureCardsScreen extends React.Component {
   animateSuccess = () =>
     Animated.timing(this.state.tickProgress, {
       toValue: 1.5,
-      duration: 2000,
+      duration: 1500,
       easing: Easing.linear,
       useNativeDriver: true
     }).start(this.resetSuccessAnimation);
@@ -101,7 +101,7 @@ class ConfigureCardsScreen extends React.Component {
   resetSuccessAnimation = () =>
     Animated.timing(this.state.tickProgress, {
       toValue: 0,
-      duration: 1000,
+      duration: 500,
       easing: Easing.linear,
       useNativeDriver: true
     }).start();

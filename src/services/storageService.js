@@ -109,7 +109,7 @@ const saveCard = async (deckId, cardText, cardIndex) => {
     throw new Error('Unable to save card because deck does not exist');
   }
 
-  if (cardIndex) {
+  if (cardIndex || cardIndex === 0) {
     deck.cards[cardIndex] = cardText;
   } else {
     deck.cards.push(cardText);

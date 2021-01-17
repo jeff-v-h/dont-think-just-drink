@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import HomeScreen from '../components/game/HomeScreen';
+import HomeScreen from '../components/decks/HomeScreen';
 import RulesScreen from '../components/rules/RulesScreen';
 import GameScreen from '../components/game/GameScreen';
 import DeckListScreen from '../components/decks/DeckListScreen';
@@ -13,15 +13,15 @@ import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
 import HeaderDeleteCardButton from '../components/decks/HeaderDeleteCardButton';
 
 const Drawer = createDrawerNavigator();
-const ConfigStack = createStackNavigator();
+const DecksConfigStack = createStackNavigator();
 const GameStack = createStackNavigator();
 const RulesStack = createStackNavigator();
 
-const ConfigNavigationStack = () => (
-  <ConfigStack.Navigator initialRouteName="Home">
-    <ConfigStack.Screen name="Home" component={HomeScreen} />
-    <ConfigStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
-    <ConfigStack.Screen
+const DecksConfigNavigationStack = () => (
+  <DecksConfigStack.Navigator initialRouteName="Home">
+    <DecksConfigStack.Screen name="Home" component={HomeScreen} />
+    <DecksConfigStack.Screen name="DeckList" component={DeckListScreen} options={{ title: 'Decks' }} />
+    <DecksConfigStack.Screen
       name="Deck"
       component={DeckScreen}
       options={({ navigation, route }) => ({
@@ -38,7 +38,7 @@ const ConfigNavigationStack = () => (
         headerRight: () => <HeaderDeleteDeckButton deckId={route.params.deckId} navigate={navigation.navigate} />
       })}
     />
-    <ConfigStack.Screen
+    <DecksConfigStack.Screen
       name="ConfigureCards"
       component={ConfigureCardsScreen}
       options={({ navigation, route }) => ({
@@ -61,7 +61,7 @@ const ConfigNavigationStack = () => (
         }
       })}
     />
-  </ConfigStack.Navigator>
+  </DecksConfigStack.Navigator>
 );
 
 const GamesNavigationStack = () => (
@@ -80,7 +80,7 @@ function AppNavigator() {
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerPosition="right" drawerType="slide">
-        <Drawer.Screen name="Configuration" component={ConfigNavigationStack} />
+        <Drawer.Screen name="Decks" component={DecksConfigNavigationStack} />
         <Drawer.Screen name="Game" component={GamesNavigationStack} />
         <Drawer.Screen name="Rules" component={RulesNavigationStack} />
       </Drawer.Navigator>
