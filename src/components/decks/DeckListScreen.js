@@ -72,9 +72,10 @@ class DeckListScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.list}>
-          <Text style={deckStyles.currentlySelectedHeading}>Selected</Text>
           <FlatList
             data={decks}
+            ListHeaderComponent={<Text style={deckStyles.currentlySelectedHeading}>Selected</Text>}
+            ListHeaderComponentStyle={deckStyles.deckListHeader}
             renderItem={({ item }) => (
               <ListLinkRow onPress={this.selectDeck} text={item.name} viewStyle={deckStyles.listRow}>
                 <View style={deckStyles.selectedCol}>
