@@ -44,14 +44,7 @@ const DecksConfigNavigationStack = () => (
       component={DeckScreen}
       options={({ navigation, route }) => ({
         headerLeft: (props) => (
-          <HeaderBackButton
-            {...props}
-            onPress={() =>
-              navigation.navigate('DeckList', {
-                reloadDeckList: route.params.reloadDeckList
-              })
-            }
-          />
+          <HeaderBackButton {...props} onPress={() => navigation.navigate('DeckList', { reloadDeckList: true })} />
         ),
         headerRight: () => <HeaderDeleteDeckButton deckId={route.params.deckId} navigate={navigation.navigate} />
       })}

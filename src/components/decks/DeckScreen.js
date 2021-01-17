@@ -39,12 +39,7 @@ class DeckScreen extends React.Component {
       const deck = deckId ? await StorageService.getDeck(deckId) : await this.createNewDeck();
 
       this.setState({ deck, originalDeckName: deck.name });
-
-      const params = {
-        deckId: deck.id,
-        reloadDeckList: !deckId
-      };
-      this.props.navigation.setParams(params);
+      this.props.navigation.setParams({ deckId: deck.id });
     } catch (e) {
       Alert.alert(ERROR_TITLE, e.message);
     }
@@ -85,7 +80,6 @@ class DeckScreen extends React.Component {
       const { deck } = this.state;
       await StorageService.updateDeckName(deck);
       this.setState({ originalDeckName: deck.name });
-      this.props.navigation.setParams({ reloadDeckList: true });
     } catch (e) {
       Alert.alert(ERROR_TITLE, e.message);
     }

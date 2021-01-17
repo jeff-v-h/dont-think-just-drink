@@ -30,6 +30,7 @@ class HomeScreen extends React.Component {
 
   loadSelectedDeck = async () => {
     try {
+      // await StorageService.clearAllData();
       let selectedDeck = await StorageService.getSelectedDeck();
 
       if (!selectedDeck) {

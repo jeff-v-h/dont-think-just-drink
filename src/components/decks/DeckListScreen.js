@@ -20,18 +20,18 @@ class DeckListScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.loadCustomDecks();
+    this.loadDecks();
   }
 
   componentDidUpdate() {
     const { navigation, route } = this.props;
     if (route.params?.reloadDeckList) {
-      this.loadCustomDecks();
+      this.loadDecks();
       navigation.setParams({ reloadDeckList: false });
     }
   }
 
-  loadCustomDecks = async () => {
+  loadDecks = async () => {
     try {
       const deckList = await StorageService.getDeckList();
 
