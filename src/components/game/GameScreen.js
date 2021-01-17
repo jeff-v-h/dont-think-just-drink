@@ -9,21 +9,33 @@ import uuid from 'uuid';
 class GameScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      played: [],
-      deckCards: [],
-      cardIndexToShow: -1,
-      gameId: uuid.v1()
-    };
+
+    this.state = this.getInitialState();
   }
 
   componentDidMount() {
     this.setupGame();
   }
 
+  componentDidUpdate() {
+    if (this.props.route.params.newGame) {
+      this.setupGame();
+    }
+  }
+
+  getInitialState = () => ({
+    played: [],
+    deckCards: [],
+    cardIndexToShow: -1,
+    gameId: uuid.v1()
+  });
+
   setupGame = async () => {
-    const deck = await StorageService.getDeck(this.props.route.params.deckId);
-    this.setState({ deckCards: deck.cards }, this.playNewCard);
+    const { route, navigation } = this.props;
+    navigation.setParams({ newGame: false });
+    console.log('setup');
+    const deck = await StorageService.getDeck(route.params.deckId);
+    this.setState({ ...this.getInitialState(), deckCards: deck.cards }, this.playNewCard);
   };
 
   // min and max included as possible outcomes
@@ -82,13 +94,11 @@ class GameScreen extends React.Component {
           <AppText>{played[cardIndexToShow]}</AppText>
         </View>
         <View style={[styles.section, styles.buttonsRow]}>
-          {cardIndexToShow > 0 && (
-            <AppButton title="Previous" onPress={() => this.seePreviousCard()} styles={styles.button} />
-          )}
+          {cardIndexToShow > 0 && <AppButton title="<" onPress={() => this.seePreviousCard()} styles={styles.button} />}
           {cardIndexToShow < played.length - 1 && (
-            <AppButton title="Back to most recent" onPress={() => this.seeCurrentCard()} style={styles.button} />
+            <AppButton title="Most recent" onPress={() => this.seeCurrentCard()} style={styles.button} />
           )}
-          {deckCards.length > 0 && <AppButton title="Next" onPress={() => this.playNextCard()} style={styles.button} />}
+          {deckCards.length > 0 && <AppButton title=">" onPress={() => this.playNextCard()} style={styles.button} />}
         </View>
       </SafeAreaView>
     );

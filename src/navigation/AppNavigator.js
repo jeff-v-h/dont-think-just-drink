@@ -84,7 +84,13 @@ const DecksConfigNavigationStack = () => (
 
 const GamesNavigationStack = () => (
   <GameStack.Navigator initialRouteName="Game" options={{ title: "Don't Think, Just Drink" }}>
-    <GameStack.Screen name="Game" component={GameScreen} />
+    <GameStack.Screen
+      name="Game"
+      component={GameScreen}
+      options={({ route }) => ({
+        title: 'Deck: ' + route.params.deckName
+      })}
+    />
   </GameStack.Navigator>
 );
 

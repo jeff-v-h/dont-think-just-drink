@@ -86,7 +86,7 @@ class HomeScreen extends React.Component {
             onPress={() =>
               navigation.navigate('Game', {
                 screen: 'Game',
-                params: { deckId: selectedDeckId }
+                params: { deckId: selectedDeckId, deckName: selectedDeckName, newGame: true }
               })
             }
             disabled={!selectedDeckId}
