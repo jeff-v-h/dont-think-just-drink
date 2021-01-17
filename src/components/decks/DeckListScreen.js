@@ -67,15 +67,22 @@ class DeckListScreen extends React.Component {
   };
 
   render() {
-    const { decks } = this.state;
+    const { decks, selectedDeckId } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.list}>
+          <Text style={deckStyles.currentlySelectedHeading}>Selected</Text>
           <FlatList
             data={decks}
             renderItem={({ item }) => (
-              <ListLinkRow onPress={this.selectDeck} text={item.name} buttonStyle={deckStyles.listRow}>
+              <ListLinkRow onPress={this.selectDeck} text={item.name} viewStyle={deckStyles.listRow}>
+                <View style={deckStyles.selectedCol}>
+                  {item.id === selectedDeckId && <IconButton iconName="check" buttonStyle={deckStyles.selectedIcon} />}
+                </View>
+                <Text style={styles.itemText} numberOfLines={1}>
+                  {item.name}
+                </Text>
                 <IconButton
                   iconName="edit"
                   onPress={this.navigateToDeck(item)}

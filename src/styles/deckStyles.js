@@ -2,9 +2,22 @@ import { StyleSheet } from 'react-native';
 import { verticalScale, moderateScale, scale } from '../utils/scaling';
 import { colours } from './variables';
 
+const selectedColWidth = moderateScale(56);
+
 const deckStyles = StyleSheet.create({
   listRow: {
     height: verticalScale(50)
+  },
+  currentlySelectedHeading: {
+    width: selectedColWidth,
+    textAlign: 'center'
+  },
+  selectedCol: {
+    width: selectedColWidth,
+    marginRight: moderateScale(10)
+  },
+  selectedIcon: {
+    alignSelf: 'center'
   },
   editDeck: {
     height: '100%',
