@@ -11,7 +11,13 @@ const propTypes = {
 };
 
 const HeaderDeleteDeckButton = ({ deckId, navigate }) => {
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
+    const selectedDeck = await StorageService.getSelectedDeck();
+    if (selectedDeck.id === deckId) {
+      Alert.alert('', 'Cannot delete a selected deck');
+      return;
+    }
+
     Alert.alert('Confirm Delete', 'Are you sure you want to permanently remove this deck from your device?', [
       {
         text: 'Cancel',
