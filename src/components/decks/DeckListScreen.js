@@ -56,8 +56,11 @@ class DeckListScreen extends React.Component {
     }
   };
 
-  selectDeck = () => {
-    console.log('select deck');
+  selectDeck = async (id) => {
+    if (this.state.selectedDeckId != id) {
+      await StorageService.saveSelectedDeckId(id);
+      this.setState({ selectedDeckId: id });
+    }
   };
 
   navigateToDeck = (deck) => () => {
@@ -77,7 +80,7 @@ class DeckListScreen extends React.Component {
             ListHeaderComponent={<Text style={deckStyles.currentlySelectedHeading}>Selected</Text>}
             ListHeaderComponentStyle={deckStyles.deckListHeader}
             renderItem={({ item }) => (
-              <ListLinkRow onPress={this.selectDeck} text={item.name} viewStyle={deckStyles.listRow}>
+              <ListLinkRow onPress={() => this.selectDeck(item.id)} text={item.name} viewStyle={deckStyles.listRow}>
                 <View style={deckStyles.selectedCol}>
                   {item.id === selectedDeckId && <IconButton iconName="check" buttonStyle={deckStyles.selectedIcon} />}
                 </View>
