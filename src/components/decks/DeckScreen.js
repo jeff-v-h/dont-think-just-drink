@@ -118,7 +118,10 @@ class DeckScreen extends React.Component {
           <FlatList
             data={deck.cards}
             renderItem={({ item, index }) => (
-              <ListLinkRow onPress={this.getNavigationToCardFunction(index)} viewStyle={deckStyles.listRow}>
+              <ListLinkRow
+                onPress={this.getNavigationToCardFunction(index)}
+                viewStyle={[deckStyles.listRow, deckStyles.deckListRow]}
+              >
                 <Text style={styles.itemText} numberOfLines={2}>
                   {item}
                 </Text>

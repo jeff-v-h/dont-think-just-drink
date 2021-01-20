@@ -79,6 +79,7 @@ class HomeScreen extends React.Component {
             onPress={this.goToDeckSelection}
             style={gameStyles.selectDeckButton}
             textStyle={gameStyles.selectDeckText}
+            numberOfLines={1}
           />
         </View>
         <View style={styles.section}>

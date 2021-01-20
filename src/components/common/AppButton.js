@@ -10,7 +10,8 @@ AppButton.propTypes = {
   style: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   textStyle: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   disabled: PropTypes.bool,
-  disabledStyle: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+  disabledStyle: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  numberOfLines: PropTypes.number
 };
 
 AppButton.defaultProps = {
@@ -18,10 +19,11 @@ AppButton.defaultProps = {
   disabled: false,
   style: [],
   textStyle: [],
-  disabledStyle: []
+  disabledStyle: [],
+  numberOfLines: 0
 };
 
-function AppButton({ title, onPress, disabled, style, disabledStyle, textStyle }) {
+function AppButton({ title, onPress, disabled, style, disabledStyle, textStyle, numberOfLines }) {
   const buttonStyles = disabled
     ? createStylesArray(styles.disabledButton, disabledStyle)
     : createStylesArray(styles.button, style);
@@ -30,7 +32,9 @@ function AppButton({ title, onPress, disabled, style, disabledStyle, textStyle }
 
   return (
     <TouchableHighlight style={buttonStyles} onPress={onPress} disabled={disabled}>
-      <Text style={allTextStyles}>{title}</Text>
+      <Text style={allTextStyles} numberOfLines={numberOfLines}>
+        {title}
+      </Text>
     </TouchableHighlight>
   );
 }

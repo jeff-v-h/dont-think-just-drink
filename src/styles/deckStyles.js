@@ -8,6 +8,10 @@ const deckStyles = StyleSheet.create({
   listRow: {
     height: verticalScale(50)
   },
+  deckListRow: {
+    paddingLeft: moderateScale(20),
+    paddingRight: moderateScale(20)
+  },
   deckListHeader: {
     borderBottomWidth: 1,
     paddingBottom: moderateScale(10)
