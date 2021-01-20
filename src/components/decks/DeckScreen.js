@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, TextInput, Alert, Text } from 'react-native';
+import { View, SafeAreaView, FlatList, TextInput, Alert, Text, Platform } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
@@ -17,7 +17,8 @@ class DeckScreen extends React.Component {
       deck: {
         name: '',
         cards: []
-      }
+      },
+      selection: Platform.OS === 'android' ? { start: 0 } : null
     };
   }
 
@@ -32,6 +33,18 @@ class DeckScreen extends React.Component {
       navigation.setParams({ reloadDeck: false });
     }
   }
+
+  onFocus = () => {
+    if (Platform.OS === 'android') {
+      this.setState({ selection: null });
+    }
+  };
+
+  onBlur = () => {
+    if (Platform.OS === 'android') {
+      this.setState({ selection: { start: 0, end: 0 } });
+    }
+  };
 
   loadDeck = async () => {
     try {
@@ -97,12 +110,19 @@ class DeckScreen extends React.Component {
   };
 
   render() {
-    const { deck, originalDeckName } = this.state;
+    const { deck, originalDeckName, selection } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={deckStyles.titleRow}>
-          <TextInput style={deckStyles.titleInput} value={deck.name} onChangeText={this.onChangeDeckName} />
+          <TextInput
+            style={deckStyles.titleInput}
+            value={deck.name}
+            onChangeText={this.onChangeDeckName}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            selection={selection}
+          />
           <View style={deckStyles.titleSaveWrapper}>
             <AppButton
               title="Save"
