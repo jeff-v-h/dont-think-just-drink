@@ -116,7 +116,7 @@ class ConfigureCardsScreen extends React.Component {
         this.goPreviousCard();
         return;
       }
-      if (translationX < -50 && cardIndex !== cards.length - 1) {
+      if (translationX < -50 && cardIndex !== cards.length) {
         this.goNextCard();
         return;
       }
