@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Alert } from 'react-native';
 import styles from '../../styles/styles';
 import AppText from '../common/AppText';
 import AppButton from '../common/AppButton';
 import StorageService from '../../services/storageService';
 import uuid from 'uuid';
 import gameStyles from '../../styles/gameStyles';
+import { ERROR_TITLE } from '../../utils/constants';
 
 class GameScreen extends React.Component {
   constructor(props) {
@@ -32,11 +33,17 @@ class GameScreen extends React.Component {
   });
 
   setupGame = async () => {
-    const { route, navigation } = this.props;
-    navigation.setParams({ newGame: false });
+    try {
+      const { route, navigation } = this.props;
 
-    const deck = await StorageService.getDeck(route.params.deckId);
-    this.setState({ ...this.getInitialState(), cardPile: deck.cards }, this.playNewCard);
+      let deckId = route.params?.deckId ?? (await StorageService.getSelectedDeck()).id;
+      const deck = await StorageService.getDeck(deckId);
+
+      navigation.setParams({ newGame: false, deckName: deck.name });
+      this.setState({ ...this.getInitialState(), cardPile: deck.cards }, this.playNewCard);
+    } catch (e) {
+      Alert.alert(ERROR_TITLE, 'Unable to get selected deck');
+    }
   };
 
   // min and max included as possible outcomes

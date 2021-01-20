@@ -81,7 +81,7 @@ const GamesNavigationStack = () => (
       name="Game"
       component={GameScreen}
       options={({ route }) => ({
-        title: 'Deck: ' + route.params.deckName
+        title: 'Deck: ' + (route.params?.deckName ?? '')
       })}
     />
   </GameStack.Navigator>
