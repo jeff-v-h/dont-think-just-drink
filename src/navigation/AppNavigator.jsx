@@ -11,11 +11,13 @@ import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 import { HeaderBackButton } from '@react-navigation/stack';
 import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
 import HeaderDeleteCardButton from '../components/decks/HeaderDeleteCardButton';
+import ContactUsScreen from '../components/contact-us/ContactUsScreen';
 
 const Drawer = createDrawerNavigator();
 const DecksConfigStack = createStackNavigator();
 const GameStack = createStackNavigator();
 const RulesStack = createStackNavigator();
+const ContactStack = createStackNavigator();
 
 const DecksConfigNavigationStack = () => (
   <DecksConfigStack.Navigator initialRouteName="Home">
@@ -93,6 +95,12 @@ const RulesNavigationStack = () => (
   </RulesStack.Navigator>
 );
 
+const ContactNavigationStack = () => (
+  <ContactStack.Navigator initialRouteName="Contact">
+    <ContactStack.Screen name="ContactUs" component={ContactUsScreen} options={{ title: 'Contact Us' }} />
+  </ContactStack.Navigator>
+)
+
 function AppNavigator() {
   return (
     <NavigationContainer>
@@ -100,6 +108,7 @@ function AppNavigator() {
         <Drawer.Screen name="Decks" component={DecksConfigNavigationStack} />
         <Drawer.Screen name="Game" component={GamesNavigationStack} />
         <Drawer.Screen name="Rules" component={RulesNavigationStack} />
+        <Drawer.Screen name="Contact Us" component={ContactNavigationStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

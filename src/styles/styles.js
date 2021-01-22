@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%'
   },
+  flexStart: {
+    justifyContent: 'flex-start'
+  },
   list: {
     flex: 1,
     width: '100%'
