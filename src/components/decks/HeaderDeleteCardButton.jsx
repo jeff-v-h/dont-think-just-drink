@@ -18,7 +18,7 @@ const HeaderDeleteCardButton = ({ deckId, cardIndex, navigate }) => {
   };
 
   return (
-    <View style={styles.headerDeleteButtonWrapper}>
+    <View style={styles.headerRightIconWrapper}>
       <IconButton onPress={deleteCard} iconName="trash-o" size={26} opacity={0.5} />
     </View>
   );

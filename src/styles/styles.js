@@ -95,14 +95,12 @@ const styles = StyleSheet.create({
   floatingActionIcon: {
     color: colours.white
   },
-  headerDeleteButtonWrapper: {
+  headerRightIconWrapper: {
     justifyContent: 'center',
     flex: 1,
     paddingRight: moderateScale(14)
-  }
+  },
+  headerMenuButton: {}
 });
-
-// borderWidth: 1,
-// borderColor: 'red'
 
 export default styles;

@@ -12,6 +12,7 @@ import { HeaderBackButton } from '@react-navigation/stack';
 import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
 import HeaderDeleteCardButton from '../components/decks/HeaderDeleteCardButton';
 import ContactUsScreen from '../components/contact-us/ContactUsScreen';
+import HeaderMenuButton from '../components/common/HeaderMenuButton';
 
 const Drawer = createDrawerNavigator();
 const DecksConfigStack = createStackNavigator();
@@ -97,7 +98,14 @@ const RulesNavigationStack = () => (
 
 const ContactNavigationStack = () => (
   <ContactStack.Navigator initialRouteName="Contact">
-    <ContactStack.Screen name="ContactUs" component={ContactUsScreen} options={{ title: 'Contact Us' }} />
+    <ContactStack.Screen
+      name="Contact"
+      component={ContactUsScreen}
+      options={() => ({
+        title: 'Contact Us',
+        headerRight: () => <HeaderMenuButton />
+      })}
+    />
   </ContactStack.Navigator>
 )
 
