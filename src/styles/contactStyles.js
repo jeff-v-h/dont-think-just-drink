@@ -4,8 +4,9 @@ import { moderateScale } from '../utils/scaling';
 const contactStyles = StyleSheet.create({
   screen: {
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: '40%'
+    justifyContent: 'space-around',
+    paddingBottom: '30%',
+    paddingTop: '30%'
   },
   text: {
     marginBottom: moderateScale(20)
