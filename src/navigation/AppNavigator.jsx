@@ -10,7 +10,6 @@ import DeckScreen from '../components/decks/DeckScreen';
 import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 import { HeaderBackButton } from '@react-navigation/stack';
 import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
-import HeaderDeleteCardButton from '../components/decks/HeaderDeleteCardButton';
 import ContactUsScreen from '../components/contact-us/ContactUsScreen';
 import HeaderMenuButton from '../components/common/HeaderMenuButton';
 
@@ -76,12 +75,6 @@ const DecksConfigNavigationStack = () => (
           />
         ),
         headerRight: () => <HeaderMenuButton />
-        // headerRight: () => {
-        //   const { deckId, cardIndex, cards } = route.params;
-        //   return cardIndex < cards.length ? (
-        //     <HeaderDeleteCardButton deckId={deckId} cardIndex={cardIndex} navigate={navigation.navigate} />
-        //   ) : null;
-        // }
       })}
     />
   </DecksConfigStack.Navigator>

@@ -12,7 +12,6 @@ function HeaderMenuButton() {
       <IconButton
         onPress={() => navigation.openDrawer()}
         iconName="bars"
-        buttonStyle={styles.headerMenuButton}
         size={26}
         opacity={0.5}
       />

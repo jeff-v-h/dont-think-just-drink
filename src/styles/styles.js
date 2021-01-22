@@ -34,10 +34,14 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%'
   },
-  menuRow: {
+  topButtonsRow: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    width: '100%'
+    width: '100%',
+    minHeight: verticalScale(30),
+    marginTop: verticalScale(10),
+    paddingRight: moderateScale(5),
+    paddingLeft: moderateScale(5)
   },
   button: {
     backgroundColor: colours.coral,
@@ -99,8 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     paddingRight: moderateScale(14)
-  },
-  headerMenuButton: {}
+  }
 });
 
 export default styles;
