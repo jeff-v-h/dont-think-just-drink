@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, TextInput, Alert, Text, Platform } from 'react-native';
+import { View, SafeAreaView, FlatList, TextInput, Alert, Text, Platform, Modal } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
 import IconButton from '../common/IconButton';
 import StorageService from '../../services/storageService';
 import { GameTypesEnum } from '../../utils/enums';
-import AppButton from '../common/AppButton';
 import { ERROR_TITLE } from '../../utils/constants';
-import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+import Menu, { MenuItem } from 'react-native-material-menu';
+import AppButton from '../common/AppButton';
 
 class DeckScreen extends React.Component {
   constructor(props) {
@@ -19,7 +19,8 @@ class DeckScreen extends React.Component {
         name: '',
         cards: []
       },
-      selection: Platform.OS === 'android' ? { start: 0 } : null
+      selection: Platform.OS === 'android' ? { start: 0 } : null,
+      modalVisible: false
     };
   }
 
@@ -85,19 +86,23 @@ class DeckScreen extends React.Component {
   };
 
   _menu = null;
-
   setMenuRef = ref => this._menu = ref;
+  showMenu = () => this._menu.show();
+  hideMenu = () => this._menu.hide();
 
-  onChangeDeckName = (text) =>
+  setModalVisible = (visible) => this.setState({ modalVisible: visible });
+
+  onChangeDeckName = (text) => {
     this.setState((prevState) => ({
       deck: { ...prevState.deck, name: text }
     }));
-
+  }
+    
   saveDeckName = async () => {
     try {
       const { deck } = this.state;
       await StorageService.updateDeckName(deck);
-      this.setState({ originalDeckName: deck.name });
+      this.setState({ originalDeckName: deck.name, modalVisible: false });
     } catch (e) {
       Alert.alert(ERROR_TITLE, e.message);
     }
@@ -136,15 +141,31 @@ class DeckScreen extends React.Component {
     });
   };
 
-  showMenu = () => this._menu.show();
-  hideMenu = () => this._menu.hide();
-
   render() {
-    const { deck, originalDeckName, selection } = this.state;
+    const { deck, originalDeckName, selection, modalVisible } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={deckStyles.titleRow}>
+          <View style={deckStyles.titleInput}>
+            <Text>{originalDeckName}</Text>
+          </View>
+          <View style={deckStyles.menuWrapper}>
+            <Menu
+              ref={this.setMenuRef}
+              button={<IconButton onPress={this.showMenu} iconName="ellipsis-v" size={24} opacity={0.5} />}
+            >
+              <MenuItem onPress={() => this.setModalVisible(true)}>Edit Name</MenuItem>
+              <MenuItem onPress={this.confirmDelete}>Delete</MenuItem>
+            </Menu>
+          </View>
+        </View>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={() => console.log('closed')}
+        >
           <TextInput
             style={deckStyles.titleInput}
             value={deck.name}
@@ -153,16 +174,12 @@ class DeckScreen extends React.Component {
             onBlur={this.onBlur}
             selection={selection}
           />
-          <View style={deckStyles.menuWrapper}>
-            <Menu
-              ref={this.setMenuRef}
-              button={<IconButton onPress={this.showMenu} iconName="ellipsis-v" size={24} opacity={0.5} />}
-            >
-              <MenuItem onPress={this.saveDeckName} disabled={deck.name === originalDeckName}>Save Name</MenuItem>
-              <MenuItem onPress={this.confirmDelete}>Delete</MenuItem>
-            </Menu>
-          </View>
-        </View>
+          <AppButton
+            title="Save"
+            onPress={this.saveDeckName}
+            disabled={deck.name === originalDeckName}
+          />
+        </Modal>
         <View style={styles.list}>
           <FlatList
             data={deck.cards}
