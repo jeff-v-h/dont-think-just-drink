@@ -61,19 +61,9 @@ const deckStyles = StyleSheet.create({
     paddingRight: moderateScale(10),
     fontSize: moderateScale(26)
   },
-  titleSaveWrapper: {
-    padding: moderateScale(5)
-  },
-  titleSave: {
+  menuWrapper: {
     padding: moderateScale(5),
-    minWidth: scale(55)
-  },
-  titleSaveDisabled: {
-    padding: moderateScale(5),
-    minWidth: scale(55)
-  },
-  titleSaveText: {
-    fontSize: moderateScale(16)
+    marginRight: moderateScale(5)
   }
 });
 

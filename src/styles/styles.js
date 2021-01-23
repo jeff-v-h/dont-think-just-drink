@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
     minHeight: verticalScale(30),
-    marginTop: verticalScale(10),
     paddingRight: moderateScale(5),
     paddingLeft: moderateScale(5)
   },

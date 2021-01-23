@@ -8,6 +8,7 @@ import StorageService from '../../services/storageService';
 import { GameTypesEnum } from '../../utils/enums';
 import AppButton from '../common/AppButton';
 import { ERROR_TITLE } from '../../utils/constants';
+import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 class DeckScreen extends React.Component {
   constructor(props) {
@@ -33,18 +34,6 @@ class DeckScreen extends React.Component {
       navigation.setParams({ reloadDeck: false });
     }
   }
-
-  onFocus = () => {
-    if (Platform.OS === 'android') {
-      this.setState({ selection: null });
-    }
-  };
-
-  onBlur = () => {
-    if (Platform.OS === 'android') {
-      this.setState({ selection: { start: 0, end: 0 } });
-    }
-  };
 
   loadDeck = async () => {
     try {
@@ -83,6 +72,22 @@ class DeckScreen extends React.Component {
     return name;
   };
 
+  onFocus = () => {
+    if (Platform.OS === 'android') {
+      this.setState({ selection: null });
+    }
+  };
+
+  onBlur = () => {
+    if (Platform.OS === 'android') {
+      this.setState({ selection: { start: 0, end: 0 } });
+    }
+  };
+
+  _menu = null;
+
+  setMenuRef = ref => this._menu = ref;
+
   onChangeDeckName = (text) =>
     this.setState((prevState) => ({
       deck: { ...prevState.deck, name: text }
@@ -98,6 +103,28 @@ class DeckScreen extends React.Component {
     }
   };
 
+  confirmDelete = async () => {
+    const selectedDeck = await StorageService.getSelectedDeck();
+    if (selectedDeck.id === this.state.deck.id) {
+      Alert.alert('', 'Cannot delete a selected deck');
+      return;
+    }
+
+    Alert.alert('Confirm Delete', 'Are you sure you want to permanently remove this deck from your device?', [
+      {
+        text: 'Cancel',
+        style: 'cancel'
+      },
+      {
+        text: 'Delete',
+        onPress: async () => {
+          await StorageService.deleteDeck(this.state.deck.id);
+          this.props.navigation.navigate('DeckList', { reloadDeckList: true });
+        }
+      }
+    ]);
+  };
+
   getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);
 
   navigateToCard = (cardIndex) => {
@@ -108,6 +135,9 @@ class DeckScreen extends React.Component {
       cards: deck.cards
     });
   };
+
+  showMenu = () => this._menu.show();
+  hideMenu = () => this._menu.hide();
 
   render() {
     const { deck, originalDeckName, selection } = this.state;
@@ -123,15 +153,14 @@ class DeckScreen extends React.Component {
             onBlur={this.onBlur}
             selection={selection}
           />
-          <View style={deckStyles.titleSaveWrapper}>
-            <AppButton
-              title="Save"
-              onPress={this.saveDeckName}
-              style={deckStyles.titleSave}
-              disabledStyle={deckStyles.titleSaveDisabled}
-              textStyle={deckStyles.titleSaveText}
-              disabled={deck.name === originalDeckName}
-            />
+          <View style={deckStyles.menuWrapper}>
+            <Menu
+              ref={this.setMenuRef}
+              button={<IconButton onPress={this.showMenu} iconName="ellipsis-v" size={24} opacity={0.5} />}
+            >
+              <MenuItem onPress={this.saveDeckName} disabled={deck.name === originalDeckName}>Save Name</MenuItem>
+              <MenuItem onPress={this.confirmDelete}>Delete</MenuItem>
+            </Menu>
           </View>
         </View>
         <View style={styles.list}>
