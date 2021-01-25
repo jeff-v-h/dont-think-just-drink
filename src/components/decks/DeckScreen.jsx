@@ -92,6 +92,11 @@ class DeckScreen extends React.Component {
 
   setModalVisible = (visible) => this.setState({ modalVisible: visible });
 
+  openEditModal = () => {
+    this.setModalVisible(true);
+    this.hideMenu();
+  }
+
   onChangeDeckName = (text) => {
     this.setState((prevState) => ({
       deck: { ...prevState.deck, name: text }
@@ -155,30 +160,33 @@ class DeckScreen extends React.Component {
               ref={this.setMenuRef}
               button={<IconButton onPress={this.showMenu} iconName="ellipsis-v" size={24} opacity={0.5} />}
             >
-              <MenuItem onPress={() => this.setModalVisible(true)}>Edit Name</MenuItem>
+              <MenuItem onPress={this.openEditModal}>Edit Name</MenuItem>
               <MenuItem onPress={this.confirmDelete}>Delete</MenuItem>
             </Menu>
           </View>
         </View>
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={modalVisible}
-          onRequestClose={() => console.log('closed')}
+          onRequestClose={() => this.setModalVisible(false)}
         >
-          <TextInput
-            style={deckStyles.titleInput}
-            value={deck.name}
-            onChangeText={this.onChangeDeckName}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            selection={selection}
-          />
-          <AppButton
-            title="Save"
-            onPress={this.saveDeckName}
-            disabled={deck.name === originalDeckName}
-          />
+          <View style={deckStyles.modalView}>
+            <TextInput
+              style={deckStyles.titleInput}
+              value={deck.name}
+              onChangeText={this.onChangeDeckName}
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              selection={selection}
+              multiline={true}
+            />
+            <AppButton
+              title="Save"
+              onPress={this.saveDeckName}
+              disabled={deck.name === originalDeckName}
+            />
+          </View>
         </Modal>
         <View style={styles.list}>
           <FlatList

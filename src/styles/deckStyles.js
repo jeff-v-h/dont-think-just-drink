@@ -60,11 +60,21 @@ const deckStyles = StyleSheet.create({
   title: {
     fontSize: moderateScale(22)
   },
-  titleInput: {
+  modalView: {
     flex: 1,
-    paddingLeft: moderateScale(10),
-    paddingRight: moderateScale(10),
-    fontSize: moderateScale(26)
+    backgroundColor: colours.black,
+    opacity: 0.9,
+    justifyContent: 'center'
+  },
+  titleInput: {
+    padding: moderateScale(10),
+    marginLeft: moderateScale(10),
+    marginRight: moderateScale(10),
+    marginBottom: verticalScale(50),
+    fontSize: moderateScale(26),
+    borderWidth: 1,
+    backgroundColor: colours.white,
+    opacity: 1
   },
   menuWrapper: {
     padding: moderateScale(5),
