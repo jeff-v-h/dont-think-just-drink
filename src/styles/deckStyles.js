@@ -52,8 +52,13 @@ const deckStyles = StyleSheet.create({
     borderBottomColor: colours.black,
     borderBottomWidth: 1
   },
-  titelInputView: {
-    flex: 1
+  titleView: {
+    flex: 1,
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10)
+  },
+  title: {
+    fontSize: moderateScale(22)
   },
   titleInput: {
     flex: 1,
@@ -63,7 +68,8 @@ const deckStyles = StyleSheet.create({
   },
   menuWrapper: {
     padding: moderateScale(5),
-    marginRight: moderateScale(5)
+    marginRight: moderateScale(5),
+    marginLeft: moderateScale(5)
   }
 });
 

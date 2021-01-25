@@ -147,8 +147,8 @@ class DeckScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={deckStyles.titleRow}>
-          <View style={deckStyles.titleInput}>
-            <Text>{originalDeckName}</Text>
+          <View style={deckStyles.titleView}>
+            <Text style={deckStyles.title}>{originalDeckName}</Text>
           </View>
           <View style={deckStyles.menuWrapper}>
             <Menu
