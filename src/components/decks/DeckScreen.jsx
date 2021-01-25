@@ -105,7 +105,12 @@ class DeckScreen extends React.Component {
     
   saveDeckName = async () => {
     try {
-      const { deck } = this.state;
+      const { deck, originalDeckName } = this.state;
+      if (deck.name === originalDeckName) {
+        this.setModalVisible(false);
+        return;
+      }
+      
       await StorageService.updateDeckName(deck);
       this.setState({ originalDeckName: deck.name, modalVisible: false });
     } catch (e) {
@@ -181,11 +186,10 @@ class DeckScreen extends React.Component {
               selection={selection}
               multiline={true}
             />
-            <AppButton
-              title="Save"
-              onPress={this.saveDeckName}
-              disabled={deck.name === originalDeckName}
-            />
+            <View style={styles.buttonsRow}>
+              <AppButton title="Cancel" onPress={() => this.setModalVisible(false)} />
+              <AppButton title="Save" onPress={this.saveDeckName} />
+            </View>
           </View>
         </Modal>
         <View style={styles.list}>
