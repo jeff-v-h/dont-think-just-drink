@@ -65,9 +65,6 @@ class HomeScreen extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.menuRow}>
-          <AppButton title="Menu" onPress={() => navigation.toggleDrawer()} />
-        </View>
         <View style={styles.section}>
           <HeaderText>Don't Think</HeaderText>
           <HeaderText>Just Drink</HeaderText>

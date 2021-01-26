@@ -7,6 +7,7 @@ import deckStyles from '../../styles/deckStyles';
 import LottieView from 'lottie-react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { ERROR_TITLE } from '../../utils/constants';
+import IconButton from '../common/IconButton';
 
 class ConfigureCardsScreen extends React.Component {
   constructor(props) {
@@ -90,6 +91,12 @@ class ConfigureCardsScreen extends React.Component {
     }
   };
 
+  deleteCard = async () => {
+    const { deckId, cardIndex } = this.state;
+    await StorageService.deleteCard(deckId, cardIndex);
+    this.props.navigation.navigate('Deck', { reloadDeck: true });
+  }
+
   animateSuccess = () =>
     Animated.timing(this.state.tickProgress, {
       toValue: 1.5,
@@ -130,6 +137,11 @@ class ConfigureCardsScreen extends React.Component {
       <PanGestureHandler onHandlerStateChange={this._onHandlerStateChange}>
         <ScrollView style={styles.scrollContainer}>
           <LottieView source={require('../../../assets/5449-success-tick.json')} progress={this.state.tickProgress} />
+          <View style={styles.topButtonsRow}>
+            {cardIndex < cards.length && (
+              <IconButton onPress={this.deleteCard} iconName="trash-o" size={30} opacity={0.5} />
+            )}
+          </View>
           <TextInput
             style={deckStyles.configCardInput}
             onChangeText={this.onChangeText}

@@ -10,8 +10,8 @@ import DeckScreen from '../components/decks/DeckScreen';
 import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 import { HeaderBackButton } from '@react-navigation/stack';
 import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
-import HeaderDeleteCardButton from '../components/decks/HeaderDeleteCardButton';
 import ContactUsScreen from '../components/contact-us/ContactUsScreen';
+import HeaderMenuButton from '../components/common/HeaderMenuButton';
 
 const Drawer = createDrawerNavigator();
 const DecksConfigStack = createStackNavigator();
@@ -21,7 +21,13 @@ const ContactStack = createStackNavigator();
 
 const DecksConfigNavigationStack = () => (
   <DecksConfigStack.Navigator initialRouteName="Home">
-    <DecksConfigStack.Screen name="Home" component={HomeScreen} />
+    <DecksConfigStack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        headerRight: () => <HeaderMenuButton />
+      }}
+    />
     <DecksConfigStack.Screen
       name="DeckList"
       component={DeckListScreen}
@@ -38,7 +44,8 @@ const DecksConfigNavigationStack = () => (
               })
             }
           />
-        )
+        ),
+        headerRight: () => <HeaderMenuButton />
       })}
     />
     <DecksConfigStack.Screen
@@ -48,7 +55,8 @@ const DecksConfigNavigationStack = () => (
         headerLeft: (props) => (
           <HeaderBackButton {...props} onPress={() => navigation.navigate('DeckList', { reloadDeckList: true })} />
         ),
-        headerRight: () => <HeaderDeleteDeckButton deckId={route.params.deckId} navigate={navigation.navigate} />
+        headerRight: () => <HeaderMenuButton />
+        // headerRight: () => <HeaderDeleteDeckButton deckId={route.params.deckId} navigate={navigation.navigate} />
       })}
     />
     <DecksConfigStack.Screen
@@ -66,12 +74,7 @@ const DecksConfigNavigationStack = () => (
             }
           />
         ),
-        headerRight: () => {
-          const { deckId, cardIndex, cards } = route.params;
-          return cardIndex < cards.length ? (
-            <HeaderDeleteCardButton deckId={deckId} cardIndex={cardIndex} navigate={navigation.navigate} />
-          ) : null;
-        }
+        headerRight: () => <HeaderMenuButton />
       })}
     />
   </DecksConfigStack.Navigator>
@@ -83,7 +86,8 @@ const GamesNavigationStack = () => (
       name="Game"
       component={GameScreen}
       options={({ route }) => ({
-        title: 'Deck: ' + (route.params?.deckName ?? '')
+        title: 'Deck: ' + (route.params?.deckName ?? ''),
+        headerRight: () => <HeaderMenuButton />
       })}
     />
   </GameStack.Navigator>
@@ -91,13 +95,27 @@ const GamesNavigationStack = () => (
 
 const RulesNavigationStack = () => (
   <RulesStack.Navigator initialRouteName="Rules">
-    <RulesStack.Screen name="Rules" component={RulesScreen} options={{ title: 'The Rules' }} />
+    <RulesStack.Screen
+      name="Rules"
+      component={RulesScreen}
+      options={{
+        title: 'The Rules',
+        headerRight: () => <HeaderMenuButton />
+      }}
+    />
   </RulesStack.Navigator>
 );
 
 const ContactNavigationStack = () => (
   <ContactStack.Navigator initialRouteName="Contact">
-    <ContactStack.Screen name="ContactUs" component={ContactUsScreen} options={{ title: 'Contact Us' }} />
+    <ContactStack.Screen
+      name="Contact"
+      component={ContactUsScreen}
+      options={{
+        title: 'Contact Us',
+        headerRight: () => <HeaderMenuButton />
+      }}
+    />
   </ContactStack.Navigator>
 )
 

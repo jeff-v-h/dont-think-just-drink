@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { verticalScale, moderateScale, scale } from '../utils/scaling';
 import { colours } from './variables';
 
@@ -52,28 +53,43 @@ const deckStyles = StyleSheet.create({
     borderBottomColor: colours.black,
     borderBottomWidth: 1
   },
-  titelInputView: {
-    flex: 1
-  },
-  titleInput: {
+  titleView: {
     flex: 1,
     paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10)
+  },
+  title: {
+    fontSize: moderateScale(22)
+  },
+  modalView: {
+    flex: 1,
+    backgroundColor: colours.modalBlack,
+    justifyContent: 'center'
+  },
+  modalContent: {
+    backgroundColor: colours.white,
+    minHeight: verticalScale(130),
+    justifyContent: 'space-around',
+    paddingLeft: moderateScale(10),
     paddingRight: moderateScale(10),
-    fontSize: moderateScale(26)
+    paddingTop: verticalScale(20),
+    paddingBottom: verticalScale(20),
+    marginLeft: moderateScale(20),
+    marginRight: moderateScale(20)
   },
-  titleSaveWrapper: {
-    padding: moderateScale(5)
+  titleInput: {
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10),
+    marginLeft: moderateScale(10),
+    marginRight: moderateScale(10),
+    marginBottom: verticalScale(30),
+    fontSize: moderateScale(24),
+    borderBottomWidth: 1
   },
-  titleSave: {
+  menuWrapper: {
     padding: moderateScale(5),
-    minWidth: scale(55)
-  },
-  titleSaveDisabled: {
-    padding: moderateScale(5),
-    minWidth: scale(55)
-  },
-  titleSaveText: {
-    fontSize: moderateScale(16)
+    marginRight: moderateScale(5),
+    marginLeft: moderateScale(5)
   }
 });
 
