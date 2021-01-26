@@ -158,7 +158,7 @@ class DeckScreen extends React.Component {
       <SafeAreaView style={styles.container}>
         <View style={deckStyles.titleRow}>
           <View style={deckStyles.titleView}>
-            <Text style={deckStyles.title}>{originalDeckName}</Text>
+            <Text style={deckStyles.title} numberOfLines={1}>{originalDeckName}</Text>
           </View>
           <View style={deckStyles.menuWrapper}>
             <Menu
@@ -171,24 +171,27 @@ class DeckScreen extends React.Component {
           </View>
         </View>
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => this.setModalVisible(false)}
         >
           <View style={deckStyles.modalView}>
-            <TextInput
-              style={deckStyles.titleInput}
-              value={deck.name}
-              onChangeText={this.onChangeDeckName}
-              onFocus={this.onFocus}
-              onBlur={this.onBlur}
-              selection={selection}
-              multiline={true}
-            />
-            <View style={styles.buttonsRow}>
-              <AppButton title="Cancel" onPress={() => this.setModalVisible(false)} />
-              <AppButton title="Save" onPress={this.saveDeckName} />
+            <View style={deckStyles.modalContent}>
+              <TextInput
+                style={deckStyles.titleInput}
+                value={deck.name}
+                onChangeText={this.onChangeDeckName}
+                onFocus={this.onFocus}
+                onBlur={this.onBlur}
+                selection={selection}
+                multiline={true}
+                maxLength={60}
+              />
+              <View style={styles.buttonsRow}>
+                <AppButton title="Cancel" onPress={() => this.setModalVisible(false)} />
+                <AppButton title="Save" onPress={this.saveDeckName} />
+              </View>
             </View>
           </View>
         </Modal>

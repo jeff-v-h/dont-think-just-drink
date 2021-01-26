@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { verticalScale, moderateScale, scale } from '../utils/scaling';
 import { colours } from './variables';
 
@@ -66,15 +67,21 @@ const deckStyles = StyleSheet.create({
     opacity: 0.9,
     justifyContent: 'center'
   },
+  modalContent: {
+    backgroundColor: colours.white,
+    minHeight: verticalScale(200),
+    justifyContent: 'space-around',
+    paddingTop: verticalScale(10),
+    paddingBottom: verticalScale(10)
+  },
   titleInput: {
-    padding: moderateScale(10),
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10),
     marginLeft: moderateScale(10),
     marginRight: moderateScale(10),
     marginBottom: verticalScale(50),
     fontSize: moderateScale(26),
-    borderWidth: 1,
-    backgroundColor: colours.white,
-    opacity: 1
+    borderBottomWidth: 1
   },
   menuWrapper: {
     padding: moderateScale(5),
