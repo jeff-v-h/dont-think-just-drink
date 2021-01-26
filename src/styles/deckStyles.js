@@ -63,24 +63,27 @@ const deckStyles = StyleSheet.create({
   },
   modalView: {
     flex: 1,
-    backgroundColor: colours.black,
-    opacity: 0.9,
+    backgroundColor: colours.modalBlack,
     justifyContent: 'center'
   },
   modalContent: {
     backgroundColor: colours.white,
-    minHeight: verticalScale(200),
+    minHeight: verticalScale(130),
     justifyContent: 'space-around',
-    paddingTop: verticalScale(10),
-    paddingBottom: verticalScale(10)
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(10),
+    paddingTop: verticalScale(20),
+    paddingBottom: verticalScale(20),
+    marginLeft: moderateScale(20),
+    marginRight: moderateScale(20)
   },
   titleInput: {
     paddingLeft: moderateScale(10),
     paddingRight: moderateScale(10),
     marginLeft: moderateScale(10),
     marginRight: moderateScale(10),
-    marginBottom: verticalScale(50),
-    fontSize: moderateScale(26),
+    marginBottom: verticalScale(30),
+    fontSize: moderateScale(24),
     borderBottomWidth: 1
   },
   menuWrapper: {
