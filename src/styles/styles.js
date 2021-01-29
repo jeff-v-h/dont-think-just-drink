@@ -102,6 +102,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     paddingRight: moderateScale(14)
+  },
+  bold: {
+    fontWeight: '700'
+  },
+  bottomPopup: {
+    padding: moderateScale(10)
   }
 });
 

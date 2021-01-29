@@ -1,1 +1,2 @@
 export const ERROR_TITLE = 'Error';
+export const DISCLAIMER = `Recaura, it's heirs, assigns, representatives, employees and agents bear no responsibility and are not liable for special or consequential damages or incidents resulting from the use, misuse, inability to use or interpretation of the contents of this product regardless of whether Recaura has been advised of the possibility of such damages or incidents.`;

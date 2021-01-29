@@ -150,6 +150,12 @@ const getSelectedDeck = async () => {
   return await getDeck(deckId);
 };
 
+const saveSeenDisclaimer = async () => await saveData('seen-disclaimer', 'true');
+const checkSeenDisclaimer = async () => {
+  const seen = await getStringData('seen-disclaimer');
+  return seen === 'true';
+};
+
 const StorageService = {
   clearAllData,
   saveDeck,
@@ -167,7 +173,9 @@ const StorageService = {
   saveMostRecentGame,
   getMostRecentGame,
   saveSelectedDeckId,
-  getSelectedDeck
+  getSelectedDeck,
+  saveSeenDisclaimer,
+  checkSeenDisclaimer
 };
 
 export default StorageService;

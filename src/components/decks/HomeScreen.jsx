@@ -1,22 +1,24 @@
 import * as React from 'react';
-import { View, SafeAreaView, Alert, Text } from 'react-native';
+import { View, SafeAreaView, Alert, Text, Modal } from 'react-native';
 import styles from '../../styles/styles';
 import HeaderText from '../common/HeaderText';
 import AppButton from '../common/AppButton';
 import StorageService from '../../services/storageService';
 import standardDeck from '../../utils/decks/standard-deck';
 import asianDeck from '../../utils/decks/asian-deck';
-import { ERROR_TITLE } from '../../utils/constants';
-import gameStyles from '../../styles/gameStyles';
+import { ERROR_TITLE, DISCLAIMER } from '../../utils/constants';
+import deckStyles from '../../styles/deckStyles';
 
 class HomeScreen extends React.Component {
   state = {
     selectedDeckId: '',
-    selectedDeckName: ''
+    selectedDeckName: '',
+    disclaimerVisible: false
   };
 
   componentDidMount() {
     this.loadSelectedDeck();
+    this.checkDisclaimer();
   }
 
   componentDidUpdate() {
@@ -59,8 +61,21 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('DeckList', { selectedDeckId, selectedDeckName });
   };
 
+  checkDisclaimer = async () => {
+    if (!await StorageService.checkSeenDisclaimer()) {
+      this.setState({ disclaimerVisible: true });
+    }
+  }
+
+  setDisclaimerVisible = disclaimerVisible => this.setState({ disclaimerVisible });
+
+  saveSeenDisclaimer = async () => {
+    this.setDisclaimerVisible(false);
+    await StorageService.saveSeenDisclaimer();
+  }
+
   render() {
-    const { selectedDeckId, selectedDeckName } = this.state;
+    const { selectedDeckId, selectedDeckName, disclaimerVisible } = this.state;
     const { navigation } = this.props;
 
     return (
@@ -69,13 +84,13 @@ class HomeScreen extends React.Component {
           <HeaderText>Don't Think</HeaderText>
           <HeaderText>Just Drink</HeaderText>
         </View>
-        <View style={gameStyles.selectDeckView}>
+        <View style={deckStyles.selectDeckView}>
           <Text style={styles.text}>Deck:</Text>
           <AppButton
             title={selectedDeckName}
             onPress={this.goToDeckSelection}
-            style={gameStyles.selectDeckButton}
-            textStyle={gameStyles.selectDeckText}
+            style={deckStyles.selectDeckButton}
+            textStyle={deckStyles.selectDeckText}
             numberOfLines={1}
           />
         </View>
@@ -92,6 +107,20 @@ class HomeScreen extends React.Component {
             style={styles.button}
           />
         </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={disclaimerVisible}
+          onRequestClose={() => this.setDisclaimerVisible(false)}
+        >
+          <View style={styles.bottomPopup}>
+            <Text style={styles.bold}>Disclaimer</Text>
+            <Text>{DISCLAIMER}</Text>
+            <View style={styles.buttonsRow}>
+              <AppButton title="Okay" onPress={this.saveSeenDisclaimer} />
+            </View>
+          </View>
+        </Modal>
       </SafeAreaView>
     );
   }
