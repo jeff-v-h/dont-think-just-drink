@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
   };
 
   checkDisclaimer = async () => {
-    if (!await StorageService.checkSeenDisclaimer()) {
+    if (await StorageService.checkSeenDisclaimer()) {
       this.setState({ disclaimerVisible: true });
     }
   }
@@ -113,11 +113,18 @@ class HomeScreen extends React.Component {
           visible={disclaimerVisible}
           onRequestClose={() => this.setDisclaimerVisible(false)}
         >
-          <View style={styles.bottomPopup}>
-            <Text style={styles.bold}>Disclaimer</Text>
-            <Text>{DISCLAIMER}</Text>
-            <View style={styles.buttonsRow}>
-              <AppButton title="Okay" onPress={this.saveSeenDisclaimer} />
+          <View style={styles.bottomPopupModal}>
+            <View style={styles.bottomPopupContent}>
+              <Text style={styles.bold}>Disclaimer</Text>
+              <Text>{DISCLAIMER}</Text>
+              <View style={styles.rightButtonsView}>
+                <AppButton
+                  title="Okay"
+                  onPress={this.saveSeenDisclaimer}
+                  style={styles.modalButton}
+                  textStyle={styles.modalButtonText}
+                />
+              </View>
             </View>
           </View>
         </Modal>

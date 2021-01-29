@@ -106,8 +106,22 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: '700'
   },
-  bottomPopup: {
-    padding: moderateScale(10)
+  bottomPopupModal: {
+    flex: 1,
+    justifyContent: 'flex-end'
+  },
+  bottomPopupContent: {
+    padding: moderateScale(15),
+    backgroundColor: colours.white
+  },
+  rightButtonsView: {
+    alignItems: 'flex-end'
+  },
+  modalButton: {
+    minWidth: scale(60)
+  },
+  modalButtonText: {
+    fontSize: moderateScale(16)
   }
 });
 
