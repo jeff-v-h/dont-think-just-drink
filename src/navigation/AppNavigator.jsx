@@ -9,15 +9,16 @@ import DeckListScreen from '../components/decks/DeckListScreen';
 import DeckScreen from '../components/decks/DeckScreen';
 import ConfigureCardsScreen from '../components/decks/ConfigureCardsScreen';
 import { HeaderBackButton } from '@react-navigation/stack';
-import HeaderDeleteDeckButton from '../components/decks/HeaderDeleteDeckButton';
 import ContactUsScreen from '../components/contact-us/ContactUsScreen';
 import HeaderMenuButton from '../components/common/HeaderMenuButton';
+import DisclaimerScreen from '../components/legal/DisclaimerScreen';
 
 const Drawer = createDrawerNavigator();
 const DecksConfigStack = createStackNavigator();
 const GameStack = createStackNavigator();
 const RulesStack = createStackNavigator();
 const ContactStack = createStackNavigator();
+const LegalStack = createStackNavigator();
 
 const DecksConfigNavigationStack = () => (
   <DecksConfigStack.Navigator initialRouteName="Home">
@@ -56,7 +57,6 @@ const DecksConfigNavigationStack = () => (
           <HeaderBackButton {...props} onPress={() => navigation.navigate('DeckList', { reloadDeckList: true })} />
         ),
         headerRight: () => <HeaderMenuButton />
-        // headerRight: () => <HeaderDeleteDeckButton deckId={route.params.deckId} navigate={navigation.navigate} />
       })}
     />
     <DecksConfigStack.Screen
@@ -119,6 +119,19 @@ const ContactNavigationStack = () => (
   </ContactStack.Navigator>
 )
 
+const LegalNavigationStack = () => (
+  <LegalStack.Navigator initialRouteName="Disclaimer">
+    <LegalStack.Screen
+      name="Disclaimer"
+      component={DisclaimerScreen}
+      options={{
+        title: "Legal/Disclaimer",
+        headerRight: () => <HeaderMenuButton />
+      }}
+    />
+  </LegalStack.Navigator>
+)
+
 function AppNavigator() {
   return (
     <NavigationContainer>
@@ -127,6 +140,7 @@ function AppNavigator() {
         <Drawer.Screen name="Game" component={GamesNavigationStack} />
         <Drawer.Screen name="Rules" component={RulesNavigationStack} />
         <Drawer.Screen name="Contact Us" component={ContactNavigationStack} />
+        <Drawer.Screen name="Legal/Disclaimer" component={LegalNavigationStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

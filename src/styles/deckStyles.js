@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { verticalScale, moderateScale, scale } from '../utils/scaling';
+import { verticalScale, moderateScale } from '../utils/scaling';
 import { colours } from './variables';
 
 const selectedColWidth = moderateScale(56);
@@ -90,6 +89,17 @@ const deckStyles = StyleSheet.create({
     padding: moderateScale(5),
     marginRight: moderateScale(5),
     marginLeft: moderateScale(5)
+  },
+  selectDeckView: {
+    width: '100%'
+  },
+  selectDeckButton: {
+    backgroundColor: colours.white,
+    elevation: 5,
+    marginTop: verticalScale(5)
+  },
+  selectDeckText: {
+    color: colours.coral
   }
 });
 
