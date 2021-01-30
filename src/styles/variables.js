@@ -7,5 +7,6 @@ export const colours = {
   grey: '#a6a6a6',
   lightgrey: '#D3D3D3',
   silver: '#C0C0C0',
-  black: '#000'
+  black: '#000',
+  modalBlack: 'rgba(0, 0, 0, 0.8)'
 };

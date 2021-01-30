@@ -27,14 +27,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%'
   },
+  flexStart: {
+    justifyContent: 'flex-start'
+  },
   list: {
     flex: 1,
     width: '100%'
   },
-  menuRow: {
+  topButtonsRow: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    width: '100%'
+    width: '100%',
+    minHeight: verticalScale(30),
+    paddingRight: moderateScale(5),
+    paddingLeft: moderateScale(5)
   },
   button: {
     backgroundColor: colours.coral,
@@ -92,14 +98,32 @@ const styles = StyleSheet.create({
   floatingActionIcon: {
     color: colours.white
   },
-  headerDeleteButtonWrapper: {
+  headerRightIconWrapper: {
     justifyContent: 'center',
     flex: 1,
     paddingRight: moderateScale(14)
+  },
+  bold: {
+    fontWeight: '700'
+  },
+  bottomPopupModal: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: colours.modalBlack
+  },
+  bottomPopupContent: {
+    padding: moderateScale(15),
+    backgroundColor: colours.white
+  },
+  rightButtonsView: {
+    alignItems: 'flex-end'
+  },
+  modalButton: {
+    minWidth: scale(60)
+  },
+  modalButtonText: {
+    fontSize: moderateScale(16)
   }
 });
-
-// borderWidth: 1,
-// borderColor: 'red'
 
 export default styles;

@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { View, SafeAreaView, FlatList, TextInput, Alert, Text, Platform } from 'react-native';
+import { View, SafeAreaView, FlatList, TextInput, Alert, Text, Platform, Modal } from 'react-native';
 import styles from '../../styles/styles';
 import deckStyles from '../../styles/deckStyles';
 import ListLinkRow from '../common/ListLinkRow';
 import IconButton from '../common/IconButton';
 import StorageService from '../../services/storageService';
 import { GameTypesEnum } from '../../utils/enums';
-import AppButton from '../common/AppButton';
 import { ERROR_TITLE } from '../../utils/constants';
+import Menu, { MenuItem } from 'react-native-material-menu';
+import AppButton from '../common/AppButton';
 
 class DeckScreen extends React.Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class DeckScreen extends React.Component {
         name: '',
         cards: []
       },
-      selection: Platform.OS === 'android' ? { start: 0 } : null
+      selection: Platform.OS === 'android' ? { start: 0 } : null,
+      modalVisible: false
     };
   }
 
@@ -33,18 +35,6 @@ class DeckScreen extends React.Component {
       navigation.setParams({ reloadDeck: false });
     }
   }
-
-  onFocus = () => {
-    if (Platform.OS === 'android') {
-      this.setState({ selection: null });
-    }
-  };
-
-  onBlur = () => {
-    if (Platform.OS === 'android') {
-      this.setState({ selection: { start: 0, end: 0 } });
-    }
-  };
 
   loadDeck = async () => {
     try {
@@ -83,19 +73,71 @@ class DeckScreen extends React.Component {
     return name;
   };
 
-  onChangeDeckName = (text) =>
+  onFocus = () => {
+    if (Platform.OS === 'android') {
+      this.setState({ selection: null });
+    }
+  };
+
+  onBlur = () => {
+    if (Platform.OS === 'android') {
+      this.setState({ selection: { start: 0, end: 0 } });
+    }
+  };
+
+  _menu = null;
+  setMenuRef = ref => this._menu = ref;
+  showMenu = () => this._menu.show();
+  hideMenu = () => this._menu.hide();
+
+  setModalVisible = (visible) => this.setState({ modalVisible: visible });
+
+  openEditModal = () => {
+    this.setModalVisible(true);
+    this.hideMenu();
+  }
+
+  onChangeDeckName = (text) => {
     this.setState((prevState) => ({
       deck: { ...prevState.deck, name: text }
     }));
-
+  }
+    
   saveDeckName = async () => {
     try {
-      const { deck } = this.state;
+      const { deck, originalDeckName } = this.state;
+      if (deck.name === originalDeckName) {
+        this.setModalVisible(false);
+        return;
+      }
+      
       await StorageService.updateDeckName(deck);
-      this.setState({ originalDeckName: deck.name });
+      this.setState({ originalDeckName: deck.name, modalVisible: false });
     } catch (e) {
       Alert.alert(ERROR_TITLE, e.message);
     }
+  };
+
+  confirmDelete = async () => {
+    const selectedDeck = await StorageService.getSelectedDeck();
+    if (selectedDeck.id === this.state.deck.id) {
+      Alert.alert('', 'Cannot delete a selected deck');
+      return;
+    }
+
+    Alert.alert('Confirm Delete', 'Are you sure you want to permanently remove this deck from your device?', [
+      {
+        text: 'Cancel',
+        style: 'cancel'
+      },
+      {
+        text: 'Delete',
+        onPress: async () => {
+          await StorageService.deleteDeck(this.state.deck.id);
+          this.props.navigation.navigate('DeckList', { reloadDeckList: true });
+        }
+      }
+    ]);
   };
 
   getNavigationToCardFunction = (cardIndex) => () => this.navigateToCard(cardIndex);
@@ -110,30 +152,49 @@ class DeckScreen extends React.Component {
   };
 
   render() {
-    const { deck, originalDeckName, selection } = this.state;
+    const { deck, originalDeckName, selection, modalVisible } = this.state;
 
     return (
       <SafeAreaView style={styles.container}>
         <View style={deckStyles.titleRow}>
-          <TextInput
-            style={deckStyles.titleInput}
-            value={deck.name}
-            onChangeText={this.onChangeDeckName}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            selection={selection}
-          />
-          <View style={deckStyles.titleSaveWrapper}>
-            <AppButton
-              title="Save"
-              onPress={this.saveDeckName}
-              style={deckStyles.titleSave}
-              disabledStyle={deckStyles.titleSaveDisabled}
-              textStyle={deckStyles.titleSaveText}
-              disabled={deck.name === originalDeckName}
-            />
+          <View style={deckStyles.titleView}>
+            <Text style={deckStyles.title} numberOfLines={1}>{originalDeckName}</Text>
+          </View>
+          <View style={deckStyles.menuWrapper}>
+            <Menu
+              ref={this.setMenuRef}
+              button={<IconButton onPress={this.showMenu} iconName="ellipsis-v" size={24} opacity={0.5} />}
+            >
+              <MenuItem onPress={this.openEditModal}>Edit Name</MenuItem>
+              <MenuItem onPress={this.confirmDelete}>Delete</MenuItem>
+            </Menu>
           </View>
         </View>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => this.setModalVisible(false)}
+        >
+          <View style={deckStyles.modalView}>
+            <View style={deckStyles.modalContent}>
+              <TextInput
+                style={deckStyles.titleInput}
+                value={deck.name}
+                onChangeText={this.onChangeDeckName}
+                onFocus={this.onFocus}
+                onBlur={this.onBlur}
+                selection={selection}
+                multiline={true}
+                maxLength={60}
+              />
+              <View style={styles.buttonsRow}>
+                <AppButton title="Cancel" onPress={() => this.setModalVisible(false)} />
+                <AppButton title="Save" onPress={this.saveDeckName} />
+              </View>
+            </View>
+          </View>
+        </Modal>
         <View style={styles.list}>
           <FlatList
             data={deck.cards}
