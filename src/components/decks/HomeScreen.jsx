@@ -17,8 +17,7 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.loadSelectedDeck();
-    this.checkDisclaimer();
+    this.onStartRequests();
   }
 
   componentDidUpdate() {
@@ -30,9 +29,14 @@ class HomeScreen extends React.Component {
     }
   }
 
+  onStartRequests = async () => {
+    // await StorageService.clearAllData();
+    this.loadSelectedDeck();
+    this.checkDisclaimer();
+  }
+
   loadSelectedDeck = async () => {
     try {
-      // await StorageService.clearAllData();
       let selectedDeck = await StorageService.getSelectedDeck();
 
       if (!selectedDeck) {
