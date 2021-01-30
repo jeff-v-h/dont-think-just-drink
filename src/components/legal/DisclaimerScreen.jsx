@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from '../../styles/styles';
 import legalStyles from '../../styles/legalStyles';
-import { DISCLAIMER } from '../../utils/constants';
+import { DISCLAIMER, LEGAL_RECOMMENDATION } from '../../utils/constants';
 
 function DisclaimerScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={legalStyles.text}>DISCLAIMER: {DISCLAIMER}</Text>
+    <View style={legalStyles.disclaimerContainer}>
+      <Text style={legalStyles.subHeading}>DRINK RESPONSIBLY:</Text>
+      <Text style={legalStyles.text}>{LEGAL_RECOMMENDATION}</Text>
+      <Text style={legalStyles.subHeading}>DISCLAIMER:</Text>
+      <Text style={legalStyles.text}>{DISCLAIMER}</Text>
     </View>
   );
 }

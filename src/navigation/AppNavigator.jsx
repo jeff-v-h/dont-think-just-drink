@@ -125,6 +125,7 @@ const LegalNavigationStack = () => (
       name="Disclaimer"
       component={DisclaimerScreen}
       options={{
+        title: "Legal/Disclaimer",
         headerRight: () => <HeaderMenuButton />
       }}
     />

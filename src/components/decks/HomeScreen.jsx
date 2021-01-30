@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
   };
 
   checkDisclaimer = async () => {
-    if (await StorageService.checkSeenDisclaimer()) {
+    if (!await StorageService.checkSeenDisclaimer()) {
       this.setState({ disclaimerVisible: true });
     }
   }
